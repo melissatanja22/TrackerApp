@@ -1,6 +1,6 @@
 body {
   font-family: "freude", sans-serif;
-  font-weight: 400;
+  font-weight: 200;
   font-style: normal;
   background: #fffafc;
   color: #333;
@@ -30,6 +30,8 @@ nav {
 }
 
 nav button {
+  font-family: "freude", sans-serif;
+  font-weight: 200;
   margin: 0 5px;
   background: #9AC4F8;
   border: none;
