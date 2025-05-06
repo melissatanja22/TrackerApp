@@ -149,7 +149,7 @@ function updateCycleInfo() {
   cycleTips.className = phase;
 
   cycleInfo.innerHTML = `<p>Day ${dayOfCycle} of your cycle</p>`;
-  cycleTips.innerHTML = `<p><strong>🌙 ${getPhaseName(phase)}</strong></p>`;
+  cycleTips.innerHTML = `<p><strong> ${getPhaseName(phase)}</strong></p>`;
 }
 
 
