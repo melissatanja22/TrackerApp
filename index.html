@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Cycle Tracker</title>
+  <title>Cycle Tracker</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css" />
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>My Cycle Tracker</h1>
+      <h1>Cycle Tracker</h1>
       <nav>
         <button onclick="showView('home')">Home</button>
         <button onclick="showView('history')">Symptom History</button>
+        <button id="loginBtn">Login</button>
+        <button id="logoutBtn" style="display:none;">Logout</button>
       </nav>
     </header>
 
@@ -20,20 +24,24 @@
     <section id="homeView" class="view active">
       <div id="calendar"></div>
       <button class="log-btn" onclick="document.getElementById('symptomForm').scrollIntoView()">Log Symptoms</button>
+      <button class="log-btn" onclick="enableNotifications()">Enable Period Reminders</button>
       <div id="cycleInfo"></div>
+      <div id="cycleTips"></div>
 
       <form id="symptomForm">
         <h2>How are you feeling today?</h2>
+        <label><input type="checkbox" name="symptom" value="cramps"/> Cramps</label>
         <label><input type="checkbox" name="symptom" value="anxiety"/> Anxiety</label>
         <label><input type="checkbox" name="symptom" value="fatigue"/> Fatigue</label>
         <label><input type="checkbox" name="symptom" value="acne"/> Acne</label>
         <label><input type="checkbox" name="symptom" value="appetite-increase"/> Appetite Increase</label>
         <label><input type="checkbox" name="symptom" value="appetite-decrease"/> Appetite Decrease</label>
+        <input type="text" id="customSymptom" placeholder="Add custom symptom..." />
         <button type="submit">Save Symptoms</button>
       </form>
     </section>
 
-    <!-- SYMPTOM HISTORY VIEW -->
+    <!-- HISTORY VIEW -->
     <section id="historyView" class="view">
       <h2>Symptom History</h2>
       <div id="symptomCalendar"></div>
@@ -41,6 +49,33 @@
     </section>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDSJiK860tmo6-VcfEtGpsNvEsmH4cEYDI",
+      authDomain: "trackerapp-e1ac6.firebaseapp.com",
+      projectId: "trackerapp-e1ac6",
+      storageBucket: "trackerapp-e1ac6.appspot.com",
+      messagingSenderId: "564625055842",
+      appId: "1:564625055842:web:1df7b8c33b9f3fe5ee313b",
+      measurementId: "G-DS39BZFTVG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    window.auth = auth;
+    window.db = db;
+    window.provider = provider;
+    window.signInWithPopup = signInWithPopup;
+    window.signOut = signOut;
+    window.onAuthStateChanged = onAuthStateChanged;
+  </script>
 </body>
 </html>

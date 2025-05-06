@@ -26,7 +26,7 @@ nav {
 
 nav button {
   margin: 0 5px;
-  background: #fcd5ce;
+  background: #F9DBBD;
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
@@ -56,10 +56,10 @@ nav button {
   font-size: 0.9rem;
 }
 
-.menstrual { background: #A53860; }
-.follicular { background: #A4BFEB; }
-.ovulation { background: #FFA5AB; }
-.luteal { background: #D4E6B5; }
+.menstrual { background: #450920; }
+.follicular { background: #A53860; }
+.ovulation { background: #DA627D; }
+.luteal { background: #FFA5AB; }
 .symptom-day { border: 2px solid #0F7173; }
 
 .log-btn {
@@ -92,7 +92,7 @@ form label {
 
 form button {
   margin-top: 10px;
-  background: #4464AD;
+  background: #F9DBBD;
   border: none;
   border-radius: 8px;
   padding: 10px;
