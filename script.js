@@ -277,3 +277,9 @@ function schedulePeriodReminder() {
     new Notification("Heads up, love—your period is likely 3 days away.");
   }, delay);
 }
+window.addEventListener("load", () => {
+  if (!document.getElementById("calendar").children.length) {
+    loadCalendar();
+    updateCycleInfo();
+  }
+});
