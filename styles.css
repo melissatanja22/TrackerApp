@@ -84,10 +84,10 @@ nav button {
 .predicted-menstrual {
   background: repeating-linear-gradient(
     -45deg,
-    #fbe1e1,
+    #f4a6a6,
+    #f4a6a6 4px,
     #fbe1e1 4px,
-    #6C0E32 4px,
-    #6C0E32 8px,
+    #fbe1e1 8px
   );
   border: 2px solid #6C0E32;
   color: #fff;
