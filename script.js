@@ -148,7 +148,7 @@ function updateCycleInfo() {
   //cycleInfo.className = phase;
   cycleTips.className = phase;
 
-  cycleInfo.innerHTML = `<p>Day ${dayOfCycle} of your cycle</p>`;
+  //cycleInfo.innerHTML = `<p>Day ${dayOfCycle} of your cycle</p>`;
   cycleTips.innerHTML = `<p><strong> ${getPhaseName(phase)}</strong></p>`;
 }
 
