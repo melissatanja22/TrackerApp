@@ -1,7 +1,9 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "freude", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   background: #fffafc;
-  color: #333;
+  color: #fff;
   margin: 0;
   padding: 0;
 }
@@ -13,6 +15,9 @@ body {
 }
 
 header h1 {
+  font-family: "freude", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   text-align: center;
   color: #A53860;
   font-weight: 600;
