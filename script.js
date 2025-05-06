@@ -247,6 +247,8 @@ window.showView = (id) => {
 };
 
 // --- NOTIFICATIONS ---
+document.getElementById("notifyBtn").addEventListener("click", enableNotifications);
+
 window.enableNotifications = function () {
   if (!("Notification" in window)) {
     alert("Browser doesn't support notifications.");

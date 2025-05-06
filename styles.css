@@ -2,7 +2,7 @@ body {
   font-family: "freude", sans-serif;
   font-weight: 50;
   font-style: normal;
-  background: #FFEBEC;
+  background: #FFF2F3;
   color: #333;
   margin: 0;
   padding: 0;
@@ -13,6 +13,11 @@ body {
   max-width: 500px;
   margin: 0 auto;
 }
+
+header {
+  position: relative;
+}
+
 
 header h1 {
   font-family: "freude", sans-serif;
@@ -107,3 +112,37 @@ form button {
   width: 100%;
   cursor: pointer;
 }
+
+#cycleInfo,
+#cycleTips {
+  background: #fff0f5;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#cycleInfo p,
+#cycleTips p,
+#cycleTips strong {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  color: #6b4b57;
+}
+
+#notifyBtn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #a25b7f;
+}
+
+#notifyBtn:hover {
+  transform: scale(1.1);
+}
+
