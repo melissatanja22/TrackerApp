@@ -83,7 +83,7 @@ nav button {
 .symptom-day { border: 2px solid #0F7173; color: #fff;}
 .predicted-menstrual {
   background: repeating-linear-gradient(
-    -45deg,
+    315deg,
     #fff 0px,
     #6C0E32 4px,
   );
