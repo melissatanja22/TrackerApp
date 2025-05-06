@@ -141,13 +141,17 @@ function updateCycleInfo() {
   const dayOfCycle = daysSince % avgLength;
   const phase = getPhase(dayOfCycle);
 
-  document.getElementById("cycleInfo").innerHTML = `
-    <p>Day ${dayOfCycle} of your cycle</p>
-  `;
-  document.getElementById("cycleTips").innerHTML = `
-    <strong>${getPhaseName(phase)}</strong>
-  `;
+  const cycleInfo = document.getElementById("cycleInfo");
+  const cycleTips = document.getElementById("cycleTips");
+
+  // Reset and apply phase class for matching background
+  cycleInfo.className = phase;
+  cycleTips.className = phase;
+
+  cycleInfo.innerHTML = `<p>Day ${dayOfCycle} of your cycle</p>`;
+  cycleTips.innerHTML = `<p><strong>🌙 ${getPhaseName(phase)}</strong></p>`;
 }
+
 
 function loadCalendar() {
   const calendar = document.getElementById("calendar");
