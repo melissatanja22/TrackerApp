@@ -264,6 +264,7 @@ window.enableNotifications = function () {
     }
   });
 };
+document.getElementById("notifyBtn").addEventListener("click", enableNotifications);
 
 function schedulePeriodReminder() {
   const lastPeriod = getLastPeriod();
