@@ -156,8 +156,15 @@ function loadCalendar() {
   const start = new Date(today.getFullYear(), today.getMonth(), 1);
   const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
   const avgLength = getAvgCycleLength();
-  const lastPeriod = getLastPeriod();
+  //const lastPeriod = getLastPeriod();
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
+
+  const lastPeriod = getLastPeriod();
+    if (!lastPeriod || isNaN(lastPeriod.getTime())) {
+      document.getElementById("calendar").innerHTML = "<p>Please log a period start date to see your cycle calendar.</p>";
+    return;
+  }
+
 
   for (let d = 1; d <= end.getDate(); d++) {
     const date = new Date(today.getFullYear(), today.getMonth(), d);
