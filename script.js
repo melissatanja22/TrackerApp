@@ -172,6 +172,15 @@ function loadCalendar() {
   const lastPeriod = getLastPeriod();
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+weekdays.forEach(day => {
+  const label = document.createElement("div");
+  label.classList.add("calendar-label");
+  label.textContent = day;
+  calendar.appendChild(label);
+});
+
+
   for (let d = 1; d <= end.getDate(); d++) {
     const date = new Date(today.getFullYear(), today.getMonth(), d);
     const iso = date.toISOString().split("T")[0];

@@ -59,6 +59,15 @@ nav button {
   margin: 1rem 0;
 }
 
+.calendar-label {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #A53860;
+  padding-bottom: 0.25rem;
+}
+
+
 .day {
   padding: 10px;
   text-align: center;
