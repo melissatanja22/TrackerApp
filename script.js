@@ -145,7 +145,7 @@ function updateCycleInfo() {
   const cycleTips = document.getElementById("cycleTips");
 
   // Reset and apply phase class for matching background
-  cycleInfo.className = phase;
+  //cycleInfo.className = phase;
   cycleTips.className = phase;
 
   cycleInfo.innerHTML = `<p>Day ${dayOfCycle} of your cycle</p>`;
