@@ -1,0 +1,102 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fffafc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+header h1 {
+  text-align: center;
+  color: #cc6b8e;
+  font-weight: 600;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+nav button {
+  margin: 0 5px;
+  background: #fcd5ce;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+#calendar, #symptomCalendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin: 1rem 0;
+}
+
+.day {
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.menstrual { background: #f4a6a6; }
+.follicular { background: #fff0ae; }
+.ovulation { background: #c5f5d2; }
+.luteal { background: #d9c3f7; }
+.symptom-day { border: 2px solid #a278b5; }
+
+.log-btn {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 10px;
+  background: #ffe3e3;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+form {
+  background: #fff0f5;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+form h2 {
+  font-size: 1.2rem;
+  color: #a25b7f;
+}
+
+form label {
+  display: block;
+  margin: 8px 0;
+}
+
+form button {
+  margin-top: 10px;
+  background: #caa5d8;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+}

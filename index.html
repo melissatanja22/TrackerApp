@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Cycle Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>My Cycle Tracker</h1>
+      <nav>
+        <button onclick="showView('home')">Home</button>
+        <button onclick="showView('history')">Symptom History</button>
+      </nav>
+    </header>
+
+    <!-- HOME VIEW -->
+    <section id="homeView" class="view active">
+      <div id="calendar"></div>
+      <button class="log-btn" onclick="document.getElementById('symptomForm').scrollIntoView()">Log Symptoms</button>
+      <div id="cycleInfo"></div>
+
+      <form id="symptomForm">
+        <h2>How are you feeling today?</h2>
+        <label><input type="checkbox" name="symptom" value="anxiety"/> Anxiety</label>
+        <label><input type="checkbox" name="symptom" value="fatigue"/> Fatigue</label>
+        <label><input type="checkbox" name="symptom" value="acne"/> Acne</label>
+        <label><input type="checkbox" name="symptom" value="appetite-increase"/> Appetite Increase</label>
+        <label><input type="checkbox" name="symptom" value="appetite-decrease"/> Appetite Decrease</label>
+        <button type="submit">Save Symptoms</button>
+      </form>
+    </section>
+
+    <!-- SYMPTOM HISTORY VIEW -->
+    <section id="historyView" class="view">
+      <h2>Symptom History</h2>
+      <div id="symptomCalendar"></div>
+      <div id="patternSummary"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
