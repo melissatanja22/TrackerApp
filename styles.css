@@ -135,15 +135,23 @@ form button {
 #notifyBtn {
   background: none;
   border: none;
-  font-size: 1.3rem;
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
-  color: #a25b7f;
+  padding: 6px;
 }
 
-#notifyBtn:hover {
+#notifyBtn svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  transition: transform 0.2s ease;
+  fill: #A53860;
+}
+
+#notifyBtn:hover svg {
   transform: scale(1.1);
 }
+
 
