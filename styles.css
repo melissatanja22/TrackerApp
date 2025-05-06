@@ -26,7 +26,7 @@ nav {
 
 nav button {
   margin: 0 5px;
-  background: #F9DBBD;
+  background: #9AC4F8;
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
@@ -56,7 +56,7 @@ nav button {
   font-size: 0.9rem;
 }
 
-.menstrual { background: #450920; }
+.menstrual { background: #6C0E32; }
 .follicular { background: #A53860; }
 .ovulation { background: #DA627D; }
 .luteal { background: #FFA5AB; }
@@ -67,7 +67,7 @@ nav button {
   width: 100%;
   margin: 1rem 0;
   padding: 10px;
-  background: #F9DBBD;
+  background: #9AC4F8;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -75,14 +75,14 @@ nav button {
 }
 
 form {
-  background: #fff0f5;
+  background: F9DBBD;
   padding: 1rem;
   border-radius: 10px;
 }
 
 form h2 {
   font-size: 1.2rem;
-  color: #a25b7f;
+  color: #A53860;
 }
 
 form label {
@@ -92,7 +92,7 @@ form label {
 
 form button {
   margin-top: 10px;
-  background: #F9DBBD;
+  background: #9AC4F8;
   border: none;
   border-radius: 8px;
   padding: 10px;
