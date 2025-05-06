@@ -14,7 +14,7 @@ body {
 
 header h1 {
   text-align: center;
-  color: #cc6b8e;
+  color: #A53860;
   font-weight: 600;
 }
 
@@ -56,18 +56,18 @@ nav button {
   font-size: 0.9rem;
 }
 
-.menstrual { background: #f4a6a6; }
-.follicular { background: #fff0ae; }
-.ovulation { background: #c5f5d2; }
-.luteal { background: #d9c3f7; }
-.symptom-day { border: 2px solid #a278b5; }
+.menstrual { background: #A53860; }
+.follicular { background: #A4BFEB; }
+.ovulation { background: #FFA5AB; }
+.luteal { background: #D4E6B5; }
+.symptom-day { border: 2px solid #0F7173; }
 
 .log-btn {
   display: block;
   width: 100%;
   margin: 1rem 0;
   padding: 10px;
-  background: #ffe3e3;
+  background: #F9DBBD;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -92,7 +92,7 @@ form label {
 
 form button {
   margin-top: 10px;
-  background: #caa5d8;
+  background: #4464AD;
   border: none;
   border-radius: 8px;
   padding: 10px;
