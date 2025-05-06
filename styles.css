@@ -72,6 +72,12 @@ nav button {
 .ovulation { background: #DA627D; color: #fff;}
 .luteal { background: #FFA5AB; color: #fff;}
 .symptom-day { border: 2px solid #0F7173; color: #fff;}
+.predicted-menstrual {
+  border: 2px dashed #6C0E32; color: #333;;
+  background: none;
+  color: #fff;
+}
+
 
 .log-btn {
   display: block;

@@ -73,6 +73,8 @@ async function loadUserData() {
   const ref = doc(db, "users", currentUser.uid);
   const snap = await getDoc(ref);
 
+  localStorage.setItem("loggedPeriods", JSON.stringify(data.loggedPeriods || []));
+
   if (!snap.exists()) {
     await setDoc(ref, {
       periodDates: [],
@@ -93,17 +95,23 @@ async function loadUserData() {
 async function saveUserData() {
   if (!currentUser) return;
   const ref = doc(db, "users", currentUser.uid);
+  
   await updateDoc(ref, {
     periodDates: JSON.parse(localStorage.getItem("periodDates")),
-    symptomLog: JSON.parse(localStorage.getItem("symptomLog"))
+    symptomLog: JSON.parse(localStorage.getItem("symptomLog")),
+    loggedPeriods: JSON.parse(localStorage.getItem("loggedPeriods") || "[]")
   });
+
 }
 
 // --- CORE LOGIC ---
 function getLastPeriod() {
-  let dates = JSON.parse(localStorage.getItem("periodDates")) || [];
-  return new Date(dates[dates.length - 1] || new Date());
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  if (!logged.length) return new Date(); // fallback
+  const sorted = logged.sort((a, b) => new Date(b) - new Date(a));
+  return new Date(sorted[0]);
 }
+
 
 function getAvgCycleLength() {
   const dates = JSON.parse(localStorage.getItem("periodDates")) || [];
@@ -156,27 +164,56 @@ function updateCycleInfo() {
 function loadCalendar() {
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
+
   const today = new Date();
   const start = new Date(today.getFullYear(), today.getMonth(), 1);
   const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
   const avgLength = getAvgCycleLength();
   const lastPeriod = getLastPeriod();
-  const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
-
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
   for (let d = 1; d <= end.getDate(); d++) {
     const date = new Date(today.getFullYear(), today.getMonth(), d);
+    const iso = date.toISOString().split("T")[0];
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
     const phase = getPhase(cycleDay);
+
     const day = document.createElement("div");
-    day.classList.add("day", phase);
-    const iso = date.toISOString().split("T")[0];
-    if (symptomLog[iso]) day.classList.add("symptom-day");
-    day.innerText = d;
+    day.classList.add("day");
+
+    if (logged.includes(iso)) {
+      day.classList.add("menstrual");
+    } else if (cycleDay < 5) {
+      day.classList.add("predicted-menstrual");
+    } else {
+      day.classList.add(phase);
+    }
+
+    day.textContent = d;
+    day.title = iso;
+    day.onclick = () => togglePeriodDate(iso);
     calendar.appendChild(day);
   }
 }
+
+async function togglePeriodDate(date) {
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  const index = logged.indexOf(date);
+
+  if (index > -1) {
+    logged.splice(index, 1); // remove
+  } else {
+    logged.push(date); // add
+  }
+
+  localStorage.setItem("loggedPeriods", JSON.stringify(logged));
+  await saveUserData();
+
+  loadCalendar();
+  updateCycleInfo();
+}
+
 
 // --- SYMPTOMS ---
 document.getElementById("symptomForm").addEventListener("submit", async function (e) {
