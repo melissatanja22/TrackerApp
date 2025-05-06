@@ -38,7 +38,7 @@ nav button {
   font-family: "freude", sans-serif;
   font-weight: 200;
   margin: 0 5px;
-  background: #9AC4F8;
+  background: #A0A3E4;
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
@@ -66,6 +66,7 @@ nav button {
   text-align: center;
   border-radius: 8px;
   font-size: 0.9rem;
+  font-weight: 50;
 }
 
 .menstrual { background: #6C0E32; color: #fff;}
@@ -79,7 +80,7 @@ nav button {
   width: 100%;
   margin: 1rem 0;
   padding: 10px;
-  background: #9AC4F8;
+  background: #A0A3E4;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -87,7 +88,7 @@ nav button {
 }
 
 form {
-  background: #D9E9FC;
+  background: #BFC1ED;
   padding: 1rem;
   border-radius: 10px;
 }
@@ -104,7 +105,7 @@ form label {
 
 form button {
   margin-top: 10px;
-  background: #9AC4F8;
+  background: #A0A3E4;
   border: none;
   border-radius: 8px;
   padding: 10px;
@@ -126,7 +127,7 @@ form button {
   font-size: 1rem;
   margin: 0.5rem 0;
   line-height: 1.4;
-  color: #6b4b57;
+  color: #fff;
 }
 
 #notifyBtn {
