@@ -1,8 +1,8 @@
 body {
   font-family: "freude", sans-serif;
-  font-weight: 200;
+  font-weight: 50;
   font-style: normal;
-  background: #fffafc;
+  background: #FFEBEC;
   color: #333;
   margin: 0;
   padding: 0;
@@ -63,11 +63,11 @@ nav button {
   font-size: 0.9rem;
 }
 
-.menstrual { background: #6C0E32; }
-.follicular { background: #A53860; }
-.ovulation { background: #DA627D; }
-.luteal { background: #FFA5AB; }
-.symptom-day { border: 2px solid #0F7173; }
+.menstrual { background: #6C0E32; color: #fff;}
+.follicular { background: #A53860; color: #fff;}
+.ovulation { background: #DA627D; color: #fff;}
+.luteal { background: #FFA5AB; color: #fff;}
+.symptom-day { border: 2px solid #0F7173; color: #fff;}
 
 .log-btn {
   display: block;
@@ -82,7 +82,7 @@ nav button {
 }
 
 form {
-  background: F9DBBD;
+  background: #FFD6D8;
   padding: 1rem;
   border-radius: 10px;
 }
