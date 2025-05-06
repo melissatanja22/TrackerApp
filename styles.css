@@ -85,11 +85,10 @@ nav button {
   background: repeating-linear-gradient(
     -45deg,
     #6C0E32,
-    #6C0E32 4px,
-    #fbe1e1 4px,
-    #fbe1e1 8px
+    #6C0E32 8px,
+    #FFF2F3 8px,
+    #FFF2F3 4px
   );
-  border: 2px solid #6C0E32;
   color: #fff;
 }
 
