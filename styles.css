@@ -89,7 +89,12 @@ nav button {
     #FFF2F3 4px,
     #FFF2F3 8px
   );
-  color: #FFA5AB;
+  color: #fff;
+  text-shadow:
+    -1px -1px 0 #6C0E32,
+     1px -1px 0 #6C0E32,
+    -1px  1px 0 #6C0E32,
+     1px  1px 0 #6C0E32;
 }
 
 
