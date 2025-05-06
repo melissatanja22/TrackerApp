@@ -165,24 +165,36 @@ function loadCalendar() {
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
 
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  weekdays.forEach(day => {
+    const label = document.createElement("div");
+    label.classList.add("calendar-label");
+    label.textContent = day;
+    calendar.appendChild(label);
+  });
+
   const today = new Date();
-  const start = new Date(today.getFullYear(), today.getMonth(), 1);
-  const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  const start = new Date(year, month, 1);
+  const end = new Date(year, month + 1, 0);
+  const startDay = start.getDay(); // 0 (Sun) to 6 (Sat)
+
   const avgLength = getAvgCycleLength();
   const lastPeriod = getLastPeriod();
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
-  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-weekdays.forEach(day => {
-  const label = document.createElement("div");
-  label.classList.add("calendar-label");
-  label.textContent = day;
-  calendar.appendChild(label);
-});
+  // Add blank cells to align the first day
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement("div");
+    empty.classList.add("day");
+    calendar.appendChild(empty);
+  }
 
-
+  // Now fill in the actual days
   for (let d = 1; d <= end.getDate(); d++) {
-    const date = new Date(today.getFullYear(), today.getMonth(), d);
+    const date = new Date(year, month, d);
     const iso = date.toISOString().split("T")[0];
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
