@@ -79,6 +79,7 @@ nav button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .menstrual { background: #6C0E32; color: #fff;}
