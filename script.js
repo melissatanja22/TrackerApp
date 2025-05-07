@@ -112,12 +112,15 @@ async function saveUserData() {
 
 function getLastPeriod(beforeDate = new Date()) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+
   const filtered = logged
-    .map(p => new Date(p))
+    .map(d => new Date(d + "T12:00:00"))
     .filter(d => d <= beforeDate)
     .sort((a, b) => b - a);
-  return filtered[0] || new Date(); // fallback to today if nothing found
+
+  return filtered[0] || null;
 }
+
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
