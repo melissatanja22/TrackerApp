@@ -35,7 +35,7 @@ const db = getFirestore(app);
 // --- GLOBAL ---
 let currentUser = null;
 let calendarOffset = 0;
-
+let regularCalendarOffset = 0;
 
 
 // --- AUTH ---
@@ -173,7 +173,9 @@ function loadCalendar() {
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
-    const label = document.createElement("div");
+    const label = document.getElementById("regularCalendarMonthLabel");
+    label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
+
     label.classList.add("calendar-label");
     label.textContent = day;
     calendar.appendChild(label);
@@ -183,8 +185,12 @@ function loadCalendar() {
   const year = today.getFullYear();
   const month = today.getMonth();
 
+  const base = new Date();
+  base.setMonth(base.getMonth() + regularCalendarOffset);
+
   const start = new Date(year, month, 1);
   const end = new Date(year, month + 1, 0);
+
   const startDay = start.getDay(); // 0 (Sun) to 6 (Sat)
 
   const avgLength = getAvgCycleLength();
@@ -244,7 +250,6 @@ async function togglePeriodDate(date) {
 
 // --- SYMPTOMS ---
 function loadSymptomCalendar() {
-  console.log("Month offset:", calendarOffset);
 
   const container = document.getElementById("symptomCalendar");
   container.innerHTML = "";
@@ -524,9 +529,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const left = document.querySelector('.arrow-btn.left-regular');
+  const right = document.querySelector('.arrow-btn.right-regular');
+
+  if (left && right) {
+    left.addEventListener("click", () => {
+      regularCalendarOffset--;
+      loadCalendar();
+    });
+
+    right.addEventListener("click", () => {
+      regularCalendarOffset++;
+      loadCalendar();
+    });
+  }
+});
+
+
 
 function changeCalendarOffset(direction) {
   calendarOffset += direction;
-  console.log("Offset now:", calendarOffset);
   loadSymptomCalendar();
 }
