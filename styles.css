@@ -237,3 +237,32 @@ form button {
   margin-right: 8px;
   border-radius: 50%;
 }
+
+.toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.symptom-toggle {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: #f8f8f8;
+  transition: all 0.2s ease;
+}
+
+.symptom-toggle.selected {
+  color: white;
+  background: currentColor;
+  border-color: currentColor;
+}
+
+.symptom-cramps    { color: #6C0E32; }
+.symptom-fatigue   { color: #227C9D; }
+.symptom-appetite  { color: #0F7173; }
+.symptom-anxiety   { color: #BDC1EF; }
+.symptom-acne      { color: #5C415D; }

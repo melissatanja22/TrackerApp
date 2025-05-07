@@ -348,12 +348,12 @@ function summarizePatterns() {
 document.getElementById("symptomForm").addEventListener("submit", async function (e) {
   e.preventDefault();
   const today = new Date().toISOString().split("T")[0];
-  const symptoms = [
-    ...document.querySelectorAll('input[name="symptom"]:checked')
-  ].map(i => i.value);
+  const selected = [...document.querySelectorAll('#realtimeToggles .selected')]
+  .map(btn => symptomOptions.find(opt => opt.label === btn.textContent)?.value);
 
   const custom = document.getElementById("customSymptom").value.trim();
-  if (custom) symptoms.push(custom);
+  if (custom) selected.push(custom);
+
 
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
   log[today] = symptoms;
@@ -416,16 +416,36 @@ window.addEventListener("load", () => {
   }
 });
 
+function renderSymptomToggles(targetId, symptomList) {
+  const container = document.getElementById(targetId);
+  container.innerHTML = "";
+
+  symptomList.forEach(symptom => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.classList.add("symptom-toggle", `symptom-${symptom.class}`);
+    btn.textContent = symptom.label;
+
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("selected");
+    });
+
+    container.appendChild(btn);
+  });
+}
+
+
 document.getElementById("backlogForm").addEventListener("submit", async function (e) {
   e.preventDefault();
   const date = document.getElementById("backlogDate").value;
   if (!date) return alert("Please choose a date.");
 
-  const selected = [...document.querySelectorAll('input[name="backlogSymptom"]:checked')]
-    .map(i => i.value);
+  const selected = [...document.querySelectorAll('#realtimeToggles .selected')]
+  .map(btn => symptomOptions.find(opt => opt.label === btn.textContent)?.value);
 
-  const custom = document.getElementById("customBacklogSymptom").value.trim();
+  const custom = document.getElementById("customSymptom").value.trim();
   if (custom) selected.push(custom);
+
 
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
   log[date] = selected;
@@ -446,5 +466,16 @@ function changeCalendarOffset(direction) {
   loadSymptomCalendar();
 }
 
+const symptomOptions = [
+  { label: "Cramps", class: "cramps", value: "cramps" },
+  { label: "Fatigue", class: "fatigue", value: "fatigue" },
+  { label: "Appetite ↑", class: "appetite", value: "appetite-increase" },
+  { label: "Appetite ↓", class: "appetite", value: "appetite-decrease" },
+  { label: "Anxiety", class: "anxiety", value: "anxiety" },
+  { label: "Acne", class: "acne", value: "acne" }
+];
+
+renderSymptomToggles("realtimeToggles", symptomOptions);
+renderSymptomToggles("backlogToggles", symptomOptions);
 
 

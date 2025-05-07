@@ -37,15 +37,11 @@
 
       <form id="symptomForm">
         <h2>How are you feeling today?</h2>
-        <label><input type="checkbox" name="symptom" value="cramps"/> Cramps</label>
-        <label><input type="checkbox" name="symptom" value="anxiety"/> Anxiety</label>
-        <label><input type="checkbox" name="symptom" value="fatigue"/> Fatigue</label>
-        <label><input type="checkbox" name="symptom" value="acne"/> Acne</label>
-        <label><input type="checkbox" name="symptom" value="appetite-increase"/> Appetite Increase</label>
-        <label><input type="checkbox" name="symptom" value="appetite-decrease"/> Appetite Decrease</label>
+        <div class="toggle-group" id="realtimeToggles"></div>
         <input type="text" id="customSymptom" placeholder="Add custom symptom..." />
         <button type="submit">Save Symptoms</button>
       </form>
+      
     </section>
 
     <!-- HISTORY VIEW -->
@@ -65,15 +61,11 @@
       <form id="backlogForm">
         <h3>Log symptoms for a previous day</h3>
         <input type="date" id="backlogDate" required />
-        <label><input type="checkbox" name="backlogSymptom" value="cramps" /> Cramps</label>
-        <label><input type="checkbox" name="backlogSymptom" value="anxiety" /> Anxiety</label>
-        <label><input type="checkbox" name="backlogSymptom" value="fatigue" /> Fatigue</label>
-        <label><input type="checkbox" name="backlogSymptom" value="acne" /> Acne</label>
-        <label><input type="checkbox" name="backlogSymptom" value="appetite-increase" /> Appetite Increase</label>
-        <label><input type="checkbox" name="backlogSymptom" value="appetite-decrease" /> Appetite Decrease</label>
+        <div class="toggle-group" id="backlogToggles"></div>
         <input type="text" id="customBacklogSymptom" placeholder="Add custom symptom..." />
         <button type="submit">Save Symptoms</button>
       </form>
+      
     
       <div id="legend">
         <h4>Legend</h4>
