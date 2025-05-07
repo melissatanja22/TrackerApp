@@ -150,7 +150,7 @@ function getCyclePhaseForDate(date) {
 
   // Other cycle phases
   const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
-  console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
+  console.log(`${date.toDateString()} → Cycle Day ${dayOfCycle}`);
 
   return getPhase(dayOfCycle);
 }
