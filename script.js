@@ -121,7 +121,10 @@ function getLastPeriod(beforeDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const iso = date.toISOString().split("T")[0];
+  const iso = date.getFullYear() + '-' +
+            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+            String(date.getDate()).padStart(2, '0');
+
 
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
