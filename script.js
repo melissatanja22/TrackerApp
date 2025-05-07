@@ -125,6 +125,7 @@ function getLastPeriod(beforeDate = new Date()) {
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
+  // Format current date to ISO
   const iso = date.getFullYear() + '-' +
               String(date.getMonth() + 1).padStart(2, '0') + '-' +
               String(date.getDate()).padStart(2, '0');
@@ -134,47 +135,45 @@ function getCyclePhaseForDate(date) {
   const totalMenstrualDays = 5;
   const avgLength = getAvgCycleLength();
 
-  // Build sorted logged periods
-  const loggedDates = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => b - a);
+  // Build sorted list of logged period dates
+  const loggedDates = logged
+    .map(d => new Date(d + "T12:00:00"))
+    .sort((a, b) => b - a);
+
   if (!loggedDates.length) return null;
 
-  const mostRecentLog = loggedDates[0];
-  const earliestLog = loggedDates[loggedDates.length - 1];
+  const latestLog = loggedDates[0];
 
-  // 🚫 Don't show anything before the earliest logged date
-  if (date < earliestLog) return null;
+  // 💥 Don't calculate phases for days before the first logged period
+  if (date < latestLog) return null;
 
-  const daysSinceMostRecent = Math.floor((date - mostRecentLog) / (1000 * 60 * 60 * 24));
+  const daysSince = Math.floor((date - latestLog) / (1000 * 60 * 60 * 24));
 
-  // 🔴 Menstrual — only manually logged days are solid
+  // 🔴 Menstrual — manually logged days
   if (isLogged) return "menstrual";
 
-  // 🔮 Predicted menstrual — only if within 5-day window after most recent log and not already logged
-  if (
-    daysSinceMostRecent > 0 &&
-    daysSinceMostRecent < totalMenstrualDays &&
-    isTodayOrFuture
-  ) {
-    const confirmedInWindow = loggedDates.filter(d => {
-      return d >= mostRecentLog &&
-             d < new Date(mostRecentLog.getTime() + totalMenstrualDays * 86400000);
-    }).length;
+  // 🔮 Predicted — only future days within the remaining menstrual window
+  const predictedCutoff = new Date(latestLog.getTime() + totalMenstrualDays * 86400000);
+  if (date >= latestLog && date < predictedCutoff && isTodayOrFuture) {
+    const confirmedInWindow = loggedDates.filter(d =>
+      d >= latestLog && d < predictedCutoff
+    ).length;
 
-    if (confirmedInWindow < totalMenstrualDays) {
+    if (daysSince < (totalMenstrualDays - confirmedInWindow)) {
       return "predicted-menstrual";
     }
   }
 
-  // 🌀 Other phases after menstrual window
-  if (date >= new Date(mostRecentLog.getTime() + totalMenstrualDays * 86400000)) {
-    const cycleDay = Math.floor((date - mostRecentLog) / (1000 * 60 * 60 * 24));
-    const phase = getPhase(cycleDay);
-    return phase;
+  // 🌀 Phases after menstrual window
+  if (date >= predictedCutoff) {
+    const dayOfCycle = ((daysSince - totalMenstrualDays) % avgLength + avgLength) % avgLength;
+    return getPhase(dayOfCycle);
   }
 
-  // Everything else — blank
+  // ❌ Otherwise, no phase
   return null;
 }
+
 
 
 
