@@ -133,7 +133,7 @@ function getCyclePhaseForDate(date) {
 
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  const dayOfCycle = (((daysSince + 1) % avgLength) + avgLength) % avgLength;
+  const dayOfCycle = (((daysSince) % avgLength) + avgLength) % avgLength;
 
   // ✅ MENSTRUAL phase only if this day is explicitly logged
   if (logged.includes(iso)) {
