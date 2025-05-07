@@ -182,7 +182,7 @@ function loadCalendar() {
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
     const label = document.getElementById("regularCalendarMonthLabel");
-    label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
+    //label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
 
     label.classList.add("calendar-label");
     label.textContent = day;
