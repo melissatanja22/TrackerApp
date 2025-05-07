@@ -232,18 +232,21 @@ form button {
 }
 .dot {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 25px;
+  height: 25px;
   margin-right: 8px;
   border-radius: 50%;
 }
 
 .toggle-group {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 8px;
-  margin: 1rem 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  justify-content: center;
+  max-width: 280px;
+  margin: 1rem auto;
 }
+
 
 .symptom-toggle {
   height: 40px;
@@ -270,8 +273,8 @@ form button {
   opacity: 1;
 }
 
-.symptom-cramps    { color: #6C0E32; }
-.symptom-fatigue   { color: #227C9D; }
-.symptom-appetite  { color: #0F7173; }
-.symptom-anxiety   { color: #BDC1EF; }
-.symptom-acne      { color: #5C415D; }
+.symptom-cramps    { background: #6C0E32; color: #fff;}
+.symptom-fatigue   { background: #227C9D; color: #fff;}
+.symptom-appetite  { background: #0F7173; color: #fff;}
+.symptom-anxiety   { background: #BDC1EF; color: #fff;}
+.symptom-acne      { background: #5C415D; color: #fff;}
