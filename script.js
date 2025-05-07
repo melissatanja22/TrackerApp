@@ -137,33 +137,26 @@ function getCyclePhaseForDate(date) {
   const loggedDates = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => b - a);
   if (!loggedDates.length) return null;
 
-  const lastPeriod = loggedDates.find(d => d <= date);
-  if (!lastPeriod) return null;
+  const anchor = getCycleAnchor(date);
+  if (!anchor || date < anchor) return null;
+
 
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   if (daysSince < 0) return null;
 
-  // Count all logged days in menstrual window
-  const confirmedCount = logged.filter(d => {
-    const dDate = new Date(d + "T12:00:00");
-    return dDate >= lastPeriod && dDate < new Date(lastPeriod.getTime() + totalMenstrualDays * 86400000);
-  }).length;
+  const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
 
-  // 🔴 If this date is manually logged = menstrual
-  if (isLogged) return "menstrual";
-
-  // 🔮 If within window after last period AND we haven't hit 5 total yet
-  if (
-    daysSince < totalMenstrualDays &&
-    isTodayOrFuture &&
-    confirmedCount < totalMenstrualDays
-  ) {
-    return "predicted-menstrual";
+  // For cycle phases
+  if (dayOffset < 5) {
+    const isLogged = logged.includes(iso);
+    if (isLogged) return "menstrual";
+    if (isTodayOrFuture) return "predicted-menstrual";
   }
-
-  // 🌀 After menstrual phase, start normal cycle tracking from lastPeriod (day 1)
-  const cycleDayOffset = daysSince;
-  const cycleDay = ((cycleDayOffset % avgLength) + avgLength) % avgLength;
+  
+  const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
+  console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
+  return getPhase(cycleDay);
+  
 
   //console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
   return getPhase(cycleDay);
@@ -335,6 +328,27 @@ function getLocalISO(date) {
 }
 
 
+function getCycleAnchor(date) {
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  const sorted = logged
+    .map(d => new Date(d + "T12:00:00"))
+    .sort((a, b) => a - b);
+
+  let anchor = null;
+  for (let i = 0; i < sorted.length; i++) {
+    const current = sorted[i];
+    const next = sorted[i + 1];
+
+    if (date < current) break;
+
+    // If there's a next date and it's > 4 days away, this is the start of a cycle
+    if (!next || Math.floor((next - current) / (1000 * 60 * 60 * 24)) > 4) {
+      anchor = current;
+    }
+  }
+
+  return anchor;
+}
 
 
 
