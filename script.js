@@ -259,11 +259,27 @@ function loadCalendar() {
 
     if (logged.includes(iso)) {
       day.classList.add("menstrual");
-    } else if (cycleDay < 5) {
-      day.classList.add("predicted-menstrual");
-    } else {
+    } //else if (cycleDay < 5) {
+      //day.classList.add("predicted-menstrual");} 
+    else {
       day.classList.add(phase);
     }
+
+    const totalMenstrualDays = 5;
+const confirmedCount = logged.filter(d => {
+  const dDate = new Date(d + "T12:00:00");
+  return dDate >= mostRecentLog && dDate < new Date(mostRecentLog.getTime() + totalMenstrualDays * 86400000);
+}).length;
+
+if (phase === "predicted-menstrual" && daysSinceLog < (totalMenstrualDays - confirmedCount)) {
+  day.classList.add("predicted-menstrual");
+  return;
+}
+
+// 🌀 All other phases
+if (phase && phase !== "predicted-menstrual") {
+  day.classList.add(`phase-${phase}`);
+}
 
     day.textContent = d;
     day.title = iso;
