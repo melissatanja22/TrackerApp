@@ -363,10 +363,19 @@ day.appendChild(number);
     const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
   const isConfirmedPeriod = logged.includes(iso);
   const isPredictedMenstrual = phase === "menstrual" && !isConfirmedPeriod;
+  const isFuture = date >= new Date().setHours(0, 0, 0, 0);
+const isLogged = logged.includes(iso);
 
   const dot = document.createElement("div");
   dot.classList.add("dot");
 
+  if (isLogged) {
+    day.classList.add("menstrual");
+  } else if (phase === "menstrual" && isFuture) {
+    day.classList.add("predicted-menstrual");
+  }
+
+if (phase) {
   if (isPredictedMenstrual) {
     dot.style.background = `repeating-linear-gradient(
     -45deg,
@@ -389,6 +398,10 @@ day.appendChild(number);
       luteal: "#FFA5AB"
     }[phase];
   }
+}
+
+
+
 
     day.appendChild(dot);
 
