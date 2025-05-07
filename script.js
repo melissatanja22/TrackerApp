@@ -172,6 +172,12 @@ function loadCalendar() {
   calendar.innerHTML = "";
   const base = new Date();
   base.setMonth(base.getMonth() + regularCalendarOffset);
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  const start = new Date(year, month, 1);
+  const end = new Date(year, month + 1, 0);
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
@@ -182,13 +188,6 @@ function loadCalendar() {
     label.textContent = day;
     calendar.appendChild(label);
   });
-
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-
-  const start = new Date(year, month, 1);
-  const end = new Date(year, month + 1, 0);
 
   const startDay = start.getDay(); // 0 (Sun) to 6 (Sat)
 
