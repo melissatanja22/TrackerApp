@@ -182,7 +182,7 @@ form button {
 
 #backlogForm {
   margin-top: 1.5rem;
-  background: #A0A3E4;
+  background: #DEE0F7;
   border-radius: 10px;
   padding: 1rem;
 }
@@ -197,6 +197,17 @@ form button {
   gap: 4px;
   margin: 1rem 0;
 }
+
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .calendar-label {
+    font-size: 0.75rem;
+  }
+}
+
 
 .day .dot {
   width: 6px;
@@ -278,3 +289,15 @@ form button {
 .symptom-appetite  { background: #AFD5AA; color: #fff;}
 .symptom-anxiety   { background: #FFBA49; color: #fff;}
 .symptom-acne      { background: #EF6461; color: #fff;}
+
+.arrow-btn {
+  background-color: #ffe3ec;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  color: #A53860;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
