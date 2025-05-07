@@ -485,11 +485,6 @@ document.getElementById("backlogForm").addEventListener("submit", async function
 
 let calendarOffset = 0;
 
-function changeCalendarOffset(direction) {
-  calendarOffset += direction;
-  loadSymptomCalendar();
-}
-
 const symptomOptions = [
   { label: "Cramps", class: "cramps", value: "cramps" },
   { label: "Fatigue", class: "fatigue", value: "fatigue" },
@@ -516,3 +511,7 @@ function addPhaseDotToDay(dayElement, cycleDay) {
   dayElement.appendChild(dot);
 }
 
+function changeCalendarOffset(direction) {
+  calendarOffset += direction;
+  loadSymptomCalendar();
+}
