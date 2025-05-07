@@ -241,16 +241,18 @@ if (isLogged) {
 
 function togglePeriodDate(dateStr) {
   let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  console.log("Before toggle:", logged.includes(dateStr) ? "Logged" : "Not logged", dateStr);
 
   if (logged.includes(dateStr)) {
-    logged = logged.filter(d => d !== dateStr); // Unmark
+    logged = logged.filter(d => d !== dateStr);
   } else {
-    logged.push(dateStr); // Mark as menstrual
+    logged.push(dateStr);
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar(); // or loadSymptomCalendar() depending on view
+  loadCalendar();
 }
+
 
 
 
