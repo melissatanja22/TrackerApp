@@ -193,8 +193,8 @@ form button {
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
   margin: 1rem 0;
 }
 
