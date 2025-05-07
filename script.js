@@ -318,8 +318,8 @@ day.appendChild(number);
     #FFF2F3 4px,
     #FFF2F3 8px
     )`;
-    dot.style.color = "color: #fff;"
-  dot.style.textShadow = `
+    number.style.color = "color: #fff;"
+  number.style.textShadow = `
     -1px -1px 0 #6C0E32,
      1px -1px 0 #6C0E32,
     -1px  1px 0 #6C0E32,
