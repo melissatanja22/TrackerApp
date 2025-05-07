@@ -280,17 +280,28 @@ if (isLogged) {
 
 function togglePeriodDate(dateStr) {
   let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  const isAlreadyLogged = logged.includes(dateStr);
 
-  if (logged.includes(dateStr)) {
-    logged = logged.filter(d => d !== dateStr);
+  if (isAlreadyLogged) {
+    // Remove clicked day and any automatically added menstrual days after it
+    const date = new Date(dateStr);
+    logged = logged.filter(d => {
+      const dDate = new Date(d);
+      const diff = (dDate - date) / (1000 * 60 * 60 * 24);
+      return d !== dateStr && !(diff > 0 && diff < 5);
+    });
   } else {
-    logged.push(dateStr);
+    const date = new Date(dateStr);
+    for (let i = 0; i < 5; i++) {
+      const d = new Date(date);
+      d.setDate(date.getDate() + i);
+      logged.push(d.toISOString().split("T")[0]);
+    }
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar(); // or loadSymptomCalendar(), depending on context
+  loadCalendar(); // or loadSymptomCalendar(), depending on view
 }
-
 
 
 
