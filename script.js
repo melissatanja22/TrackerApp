@@ -181,7 +181,7 @@ function loadCalendar() {
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
     const label = document.createElement("div");
-    label.classList.add("calendar-label");
+    label.classList.add("reg-calendar-label");
     label.textContent = day;
     calendar.appendChild(label);
   });
