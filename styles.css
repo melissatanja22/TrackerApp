@@ -239,26 +239,35 @@ form button {
 }
 
 .toggle-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
   margin: 1rem 0;
 }
 
 .symptom-toggle {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  border: 2px solid transparent;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  border: none;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  background: #f8f8f8;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.symptom-toggle:hover {
+  transform: scale(1.05);
+  opacity: 1;
 }
 
 .symptom-toggle.selected {
-  color: white;
-  background: currentColor;
-  border-color: currentColor;
+  outline: 3px solid #ffffffcc;
+  opacity: 1;
 }
 
 .symptom-cramps    { color: #6C0E32; }
