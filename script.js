@@ -443,9 +443,8 @@ document.getElementById("backlogForm").addEventListener("submit", async function
   const selected = [...document.querySelectorAll('#realtimeToggles .selected')]
   .map(btn => symptomOptions.find(opt => opt.label === btn.textContent)?.value);
 
-  const custom = document.getElementById("customSymptom").value.trim();
+  const custom = document.getElementById("customBacklogSymptom").value.trim();
   if (custom) selected.push(custom);
-
 
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
   log[date] = selected;
