@@ -121,31 +121,45 @@ function getLastPeriod(beforeDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const iso = date.toISOString().split("T")[0];
+  const iso = date.getFullYear() + '-' +
+              String(date.getMonth() + 1).padStart(2, '0') + '-' +
+              String(date.getDate()).padStart(2, '0');
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
-
   const lastPeriod = getLastPeriod(date);
-  if (!lastPeriod) return null;
+  if (!lastPeriod || date < lastPeriod) return null;
 
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  const dayOfCycle = (((daysSince) % avgLength) + avgLength) % avgLength;
 
-  // ✅ MENSTRUAL phase only if this day is explicitly logged
-  if (logged.includes(iso)) {
-    return "menstrual";
+  // 🔴 Count how many manually logged menstrual days exist after lastPeriod
+  const loggedMenstrualCount = logged.filter(d => {
+    const dDate = new Date(d + "T12:00:00");
+    return dDate >= lastPeriod && dDate < new Date(lastPeriod.getTime() + 5 * 24 * 60 * 60 * 1000);
+  }).length;
+
+  const totalMenstrualSpan = 5;
+
+  // If date is within menstrual window...
+  if (daysSince < totalMenstrualSpan) {
+    // If it's logged manually
+    if (isLogged) return "menstrual";
+
+    // If not logged, but still within 5-day window and room for predictions
+    if (isFuture && daysSince < (totalMenstrualSpan - loggedMenstrualCount)) {
+      return "menstrual";
+    }
+
+    // Otherwise, past date or already filled
+    return null;
   }
 
-  // ✅ Allow predictions in the future based on last logged period
-  if (isFuture) {
-    return getPhase(dayOfCycle);
-  }
-
-  // ❌ Otherwise, no phase in the past unless it's manually logged
-  return null;
+  // After menstrual window, continue normal phase logic
+  const dayOfCycle = ((daysSince + 1) % avgLength + avgLength) % avgLength;
+  return getPhase(dayOfCycle);
 }
+
 
 
 
