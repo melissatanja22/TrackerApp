@@ -318,12 +318,6 @@ form button {
   opacity: 1;
 }
 
-.symptom-cramps    { background: #6C0E32; color: #fff;}
-.symptom-fatigue   { background: #227C9D; color: #fff;}
-.symptom-appetite  { background: #AFD5AA; color: #fff;}
-.symptom-anxiety   { background: #FFBA49; color: #fff;}
-.symptom-acne      { background: #EF6461; color: #fff;}
-
 .arrow-btn {
   border: none;
   background: #FFF2F3;
