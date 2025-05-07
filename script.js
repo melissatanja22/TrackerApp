@@ -393,7 +393,7 @@ function summarizePatterns() {
     const day = new Date(date);
     const dayOffset = Math.floor((day - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-    const phase = getCyclePhaseForDate(date);
+    const phase = getPhase(cycleDay);
     log[date].forEach(symptom => {
       const key = `${symptom}_${phase}`;
       counts[key] = (counts[key] || 0) + 1;
