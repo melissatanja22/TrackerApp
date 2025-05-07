@@ -307,7 +307,8 @@ function togglePeriodDate(dateStr) {
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar(); // or loadSymptomCalendar()
+  loadCalendar();
+  loadSymptomCalendar(); // or loadSymptomCalendar()
 }
 
 
