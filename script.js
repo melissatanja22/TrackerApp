@@ -125,16 +125,17 @@ function getCyclePhaseForDate(date) {
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
+  const lastPeriod = getLastPeriod(date);
 
-  if (!isFuture && !isLogged) return null; // ⛔ No phase if past and not logged
+  if (!isFuture && !isLogged && !lastPeriod) return null; // ⛔ no phase
 
-  const lastPeriod = getLastPeriod(date); // ✅ this is fine now
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
 
   return getPhase(dayOfCycle);
 }
+
 
 
 
@@ -320,7 +321,7 @@ function loadSymptomCalendar() {
 
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-    const phase = getPhase(cycleDay);
+    const phase = getCyclePhaseForDate(date);
 
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
