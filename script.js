@@ -236,7 +236,7 @@ function loadCalendar() {
 
   // Now fill in the actual days
   for (let d = 1; d <= end.getDate(); d++) {
-    const date = new Date(year, month, d);
+    const date = new Date(year, month, d, 12, 0, 0);
     const iso = date.toISOString().split("T")[0];
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
