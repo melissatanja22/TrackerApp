@@ -170,6 +170,8 @@ function updateCycleInfo() {
 function loadCalendar() {
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
+  const base = new Date();
+  base.setMonth(base.getMonth() + regularCalendarOffset);
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
@@ -184,9 +186,6 @@ function loadCalendar() {
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth();
-
-  const base = new Date();
-  base.setMonth(base.getMonth() + regularCalendarOffset);
 
   const start = new Date(year, month, 1);
   const end = new Date(year, month + 1, 0);
