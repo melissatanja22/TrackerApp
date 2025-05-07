@@ -527,5 +527,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function changeCalendarOffset(direction) {
   calendarOffset += direction;
+  console.log("Offset now:", calendarOffset);
   loadSymptomCalendar();
 }
