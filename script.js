@@ -284,6 +284,10 @@ function loadCalendar() {
 function togglePeriodDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
+  if (typeof date === "string") {
+    date = new Date(date + "T12:00:00");
+  }
+
   const iso = date.getFullYear() + '-' +
               String(date.getMonth() + 1).padStart(2, '0') + '-' +
               String(date.getDate()).padStart(2, '0');
