@@ -109,12 +109,27 @@ async function saveUserData() {
 
 // --- CORE LOGIC ---
 
+
+
 function getLastPeriod() {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  if (!logged.length) return new Date(); // fallback
-  const sorted = logged.sort((a, b) => new Date(b) - new Date(a));
-  return new Date(sorted[0]);
+  const iso = date.toISOString().split("T")[0];
+
+  // Only calculate cycle phase if the date is today or in the future
+  // OR if it's logged manually
+  const isFuture = date >= new Date().setHours(0, 0, 0, 0);
+  const isLogged = logged.includes(iso);
+
+  if (!isFuture && !isLogged) return null; // ⛔ No phase
+
+  const lastPeriod = getLastPeriod(date);
+  const avgLength = getAvgCycleLength();
+  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
+
+  return getPhase(dayOfCycle);
 }
+
 
 
 function getAvgCycleLength() {
