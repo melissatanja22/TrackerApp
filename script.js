@@ -226,7 +226,7 @@ if (isLogged) {
 
     if (logged.includes(iso)) {
       day.classList.add("menstrual");
-    } else if (cycleDay < 5 && date >= new Date()) {
+    } else if (cycleDay < 5 && date >= new Date().setHours(0,0,0,0)) {
       day.classList.add("predicted-menstrual");    
     } else {
       day.classList.add(phase);
