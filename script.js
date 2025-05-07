@@ -410,6 +410,9 @@ window.addEventListener("load", () => {
   if (!document.getElementById("calendar").children.length) {
     loadCalendar();
     updateCycleInfo();
+    loadSymptomCalendar();
+    summarizePatterns();
+
   }
 });
 
