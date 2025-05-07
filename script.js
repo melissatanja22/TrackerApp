@@ -316,6 +316,9 @@ function loadSymptomCalendar() {
 
     day.textContent = d;
     container.appendChild(day);
+
+    addPhaseDotToDay(day, date);
+
   }
 
 }
@@ -481,3 +484,18 @@ const symptomOptions = [
 
 renderSymptomToggles("realtimeToggles", symptomOptions);
 renderSymptomToggles("backlogToggles", symptomOptions);
+
+function addPhaseDotToDay(dayElement, date) {
+  const phase = getCyclePhaseForDate(date);
+  const dot = document.createElement("div");
+  dot.classList.add("dot");
+  dot.style.backgroundColor = {
+    menstrual: "#6C0E32",
+    follicular: "#A53860",
+    ovulation: "#DA627D",
+    luteal: "#FFA5AB"
+  }[phase];
+
+  dayElement.appendChild(dot);
+}
+
