@@ -215,8 +215,8 @@ function loadCalendar() {
 
     if (logged.includes(iso)) {
       day.classList.add("menstrual");
-    } else if (cycleDay < 5) {
-      day.classList.add("predicted-menstrual");
+    } else if (cycleDay < 5 && date >= new Date()) {
+      day.classList.add("predicted-menstrual");    
     } else {
       day.classList.add(phase);
     }
@@ -543,5 +543,4 @@ function changeCalendarOffset(direction) {
   calendarOffset += direction;
   loadSymptomCalendar();
   loadCalendar();
-  console.log('loaded');
 }
