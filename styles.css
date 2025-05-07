@@ -182,13 +182,13 @@ form button {
 
 #backlogForm {
   margin-top: 1.5rem;
-  background: #fff0f5;
+  background: #A0A3E4;
   border-radius: 10px;
   padding: 1rem;
 }
 #backlogForm h3 {
   margin-top: 0;
-  color: #a25b7f;
+  color: #A53860;
 }
 
 .calendar-grid {
@@ -211,9 +211,9 @@ form button {
 /* Symptom border colors */
 .symptom-cramps    { border: 2px solid #6C0E32; }
 .symptom-fatigue   { border: 2px solid #227C9D; }
-.symptom-appetite  { border: 2px solid #0F7173; }
-.symptom-anxiety   { border: 2px solid #BDC1EF; }
-.symptom-acne      { border: 2px solid #5C415D; }
+.symptom-appetite  { border: 2px solid #AFD5AA; }
+.symptom-anxiety   { border: 2px solid #FFBA49; }
+.symptom-acne      { border: 2px solid #EF6461; }
 
 /* Legend styling */
 #legend {
@@ -275,6 +275,6 @@ form button {
 
 .symptom-cramps    { background: #6C0E32; color: #fff;}
 .symptom-fatigue   { background: #227C9D; color: #fff;}
-.symptom-appetite  { background: #0F7173; color: #fff;}
-.symptom-anxiety   { background: #BDC1EF; color: #fff;}
-.symptom-acne      { background: #5C415D; color: #fff;}
+.symptom-appetite  { background: #AFD5AA; color: #fff;}
+.symptom-anxiety   { background: #FFBA49; color: #fff;}
+.symptom-acne      { background: #EF6461; color: #fff;}
