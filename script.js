@@ -214,7 +214,7 @@ function updateCycleInfo() {
   const today = new Date();
   const daysSince = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = daysSince % avgLength;
-  const phase = getPhase(dayOfCycle);
+  const phase = getCyclePhaseForDate(dayOfCycle);
 
   const cycleInfo = document.getElementById("cycleInfo");
   const cycleTips = document.getElementById("cycleTips");
