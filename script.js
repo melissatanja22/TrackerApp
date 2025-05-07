@@ -150,6 +150,8 @@ function getCyclePhaseForDate(date) {
 
   // Other cycle phases
   const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
+  console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
+
   return getPhase(dayOfCycle);
 }
 
@@ -259,31 +261,11 @@ function loadCalendar() {
 
     if (logged.includes(iso)) {
       day.classList.add("menstrual");
-    } //else if (cycleDay < 5) {
-      //day.classList.add("predicted-menstrual");} 
-    else {
+    } else if (cycleDay < 5) {
+      day.classList.add("predicted-menstrual");
+    } else {
       day.classList.add(phase);
     }
-
-    const loggedDates = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => b - a);
-const mostRecentLog = loggedDates[0];
-const daysSinceLog = mostRecentLog ? Math.floor((date - mostRecentLog) / (1000 * 60 * 60 * 24)) : null;
-
-    const totalMenstrualDays = 5;
-const confirmedCount = logged.filter(d => {
-  const dDate = new Date(d + "T12:00:00");
-  return dDate >= mostRecentLog && dDate < new Date(mostRecentLog.getTime() + totalMenstrualDays * 86400000);
-}).length;
-
-if (phase === "predicted-menstrual" && daysSinceLog < (totalMenstrualDays - confirmedCount)) {
-  day.classList.add("predicted-menstrual");
-  return;
-}
-
-// 🌀 All other phases
-if (phase && phase !== "predicted-menstrual") {
-  day.classList.add(`phase-${phase}`);
-}
 
     day.textContent = d;
     day.title = iso;
