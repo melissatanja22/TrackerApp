@@ -278,12 +278,6 @@ const isLogged = logged.includes(iso);
 const isFuture = date >= new Date().setHours(0, 0, 0, 0);
 const isPredicted = cycleDay < 5 && isFuture && !isLogged;
 
-if (logged.includes(iso)) {
-  day.classList.add("menstrual");
-} else if (cycleDay < 5 && isFuture) {
-  day.classList.add("predicted-menstrual");
-}
-
 if (phase === "menstrual") {
   day.classList.add("menstrual"); // solid red
 } else if (phase === "predicted-menstrual") {
