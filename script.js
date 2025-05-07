@@ -125,22 +125,34 @@ function getCyclePhaseForDate(date) {
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
+
+  // Find the most recent logged period before or on this date
   const lastPeriod = getLastPeriod(date);
+  if (!lastPeriod) return null;
 
-  if (!isFuture && !isLogged && !lastPeriod) return null; // ❗️ NO phase if no logged anchor
-  if (!lastPeriod || date < lastPeriod) return null; // ❗️ Don't show phase before last period
-
-  const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
+  const avgLength = getAvgCycleLength();
 
+  // 🔥 Block any past dates that are showing phase but aren’t tied to a recent logged period
+  const isPast = !isFuture;
+
+  if (isPast) {
+    // Only allow menstrual phase if within 5 days of a logged period
+    const loggedStrs = new Set(logged);
+    const window = [...Array(5).keys()].map(i => {
+      const d = new Date(lastPeriod);
+      d.setDate(d.getDate() + i);
+      return d.toISOString().split("T")[0];
+    });
+
+    if (!window.includes(iso)) return null;
+    return "menstrual";
+  }
+
+  // ✅ For future dates, continue predicting normally from last logged period
+  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
   return getPhase(dayOfCycle);
 }
-
-
-
-
-
 
 
 function getAvgCycleLength() {
@@ -154,10 +166,17 @@ function getAvgCycleLength() {
 }
 
 function getPhase(day) {
+  const isFuture = date >= new Date().setHours(0, 0, 0, 0);
+  if (isFuture){
   if (day < 5) return "menstrual";
   if (day < 14) return "follicular";
   if (day < 16) return "ovulation";
   return "luteal";
+}else{
+  if (day < 14) return "follicular";
+  if (day < 16) return "ovulation";
+  return "luteal";
+}
 }
 
 function getPhaseName(phase) {
