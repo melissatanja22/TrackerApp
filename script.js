@@ -301,7 +301,6 @@ function loadSymptomCalendar() {
 }
 
 
-
 function summarizePatterns() {
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
   const avgLength = getAvgCycleLength();
