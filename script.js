@@ -171,7 +171,7 @@ function loadCalendar() {
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
   const base = new Date();
-  base.setMonth(base.getMonth() + regularCalendarOffset);
+  base.setMonth(base.getMonth() + calendarOffset);
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth();
@@ -181,12 +181,10 @@ function loadCalendar() {
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
-    const label = document.getElementById("regularCalendarMonthLabel");
-    label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
-
+    const label = document.createElement("div");
     label.classList.add("calendar-label");
     label.textContent = day;
-    calendar.appendChild(label);
+    container.appendChild(label);
   });
 
   const startDay = start.getDay(); // 0 (Sun) to 6 (Sat)
@@ -532,15 +530,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const right = document.querySelector('.arrow-btn.right-regular');
 
   if (left && right) {
-    left.addEventListener("click", () => {
-      regularCalendarOffset--;
-      loadCalendar();
-    });
-
-    right.addEventListener("click", () => {
-      regularCalendarOffset++;
-      loadCalendar();
-    });
+    leftArrow.addEventListener("click", () => changeCalendarOffset(-1));
+    rightArrow.addEventListener("click", () => changeCalendarOffset(1));
   }
 });
 
