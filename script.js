@@ -291,29 +291,6 @@ function loadSymptomCalendar() {
       day.title = symptomLog[iso].join(", ");
     }
 
-    // --- NEW: PHASE DOT CALCULATION FOR *ALL* DAYS ---
-    const closestPeriod = loggedPeriods
-      .map(p => new Date(p))
-      .filter(p => p <= date)
-      .sort((a, b) => b - a)[0]; // most recent before this day
-
-    if (closestPeriod) {
-      const offset = Math.floor((date - closestPeriod) / (1000 * 60 * 60 * 24));
-      const cycleDay = ((offset % avgLength) + avgLength) % avgLength;
-      const phase = getPhase(cycleDay);
-
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dot.style.backgroundColor = {
-        menstrual: "#6C0E32",
-        follicular: "#A53860",
-        ovulation: "#DA627D",
-        luteal: "#FFA5AB"
-      }[phase];
-
-      day.appendChild(dot);
-    }
-
     day.textContent = d;
     container.appendChild(day);
 
@@ -485,8 +462,8 @@ const symptomOptions = [
 renderSymptomToggles("realtimeToggles", symptomOptions);
 renderSymptomToggles("backlogToggles", symptomOptions);
 
-function addPhaseDotToDay(dayElement, date) {
-  const phase = getCyclePhaseForDate(date);
+function addPhaseDotToDay(dayElement, cycleDay) {
+  const phase = getPhase(cycleDay);
   const dot = document.createElement("div");
   dot.classList.add("dot");
   dot.style.backgroundColor = {
