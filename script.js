@@ -265,6 +265,10 @@ function loadCalendar() {
       day.classList.add(phase);
     }
 
+    const loggedDates = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => b - a);
+const mostRecentLog = loggedDates[0];
+const daysSinceLog = mostRecentLog ? Math.floor((date - mostRecentLog) / (1000 * 60 * 60 * 24)) : null;
+
     const totalMenstrualDays = 5;
 const confirmedCount = logged.filter(d => {
   const dDate = new Date(d + "T12:00:00");
