@@ -282,48 +282,58 @@ function loadCalendar() {
 }
 
 function togglePeriodDate(date) {
-  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-
+  // Ensure date is a Date object
   if (typeof date === "string") {
     date = new Date(date + "T12:00:00");
   }
 
-  const iso = date.getFullYear() + '-' +
-              String(date.getMonth() + 1).padStart(2, '0') + '-' +
-              String(date.getDate()).padStart(2, '0');
+  const iso = getLocalISO(date);
+  let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
-  const alreadyLogged = logged.includes(iso);
-
-  if (alreadyLogged) {
-    // Remove the date
-    const newLogged = logged.filter(d => d !== iso);
-    localStorage.setItem("loggedPeriods", JSON.stringify(newLogged));
+  if (logged.includes(iso)) {
+    // Remove it
+    logged = logged.filter(d => d !== iso);
   } else {
-    // Add the new date
+    // Add it
     logged.push(iso);
-
-    // Sort all logged dates
-    const sorted = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => a - b);
-
-    // Rebuild the list so it's always clean and ordered
-    const updated = sorted.map(d =>
-      d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0')
-    );
-
-    localStorage.setItem("loggedPeriods", JSON.stringify(updated));
-
-    // 💬 OPTIONAL: Log their cycle day for debug
-    const first = sorted[0];
-    const clicked = new Date(date.getTime());
-    const cycleDay = Math.floor((clicked - first) / (1000 * 60 * 60 * 24)) + 1;
-
-    console.log(`${iso} → Logged as Cycle Day ${cycleDay}`);
   }
 
-  loadCalendar(); // or loadSymptomCalendar(), depending on context
+  // Convert to Date objects
+  let sorted = logged
+    .map(d => new Date(d + "T12:00:00"))
+    .sort((a, b) => a - b);
+
+  // 🔥 If the logged day is more than 4 days after the previous one, treat it as new cycle
+  const thisIndex = sorted.findIndex(d => getLocalISO(d) === iso);
+  const prev = sorted[thisIndex - 1];
+
+  if (prev) {
+    const gap = Math.floor((date - prev) / (1000 * 60 * 60 * 24));
+    if (gap > 4) {
+      // Move this date to the start of the array
+      sorted.splice(thisIndex, 1);         // remove it
+      sorted.unshift(date);                // insert at start
+      console.log(`${iso} → New cycle started (gap from previous: ${gap} days)`);
+    }
+  }
+
+  // Save updated list
+  const updated = sorted.map(getLocalISO);
+  localStorage.setItem("loggedPeriods", JSON.stringify(updated));
+
+  // Optional: log cycle day for debug
+  const cycleDay = Math.floor((date - sorted[0]) / (1000 * 60 * 60 * 24));
+  console.log(`${iso} → Logged as Cycle Day ${cycleDay}`);
+
+  loadCalendar();
 }
+
+function getLocalISO(date) {
+  return date.getFullYear() + '-' +
+         String(date.getMonth() + 1).padStart(2, '0') + '-' +
+         String(date.getDate()).padStart(2, '0');
+}
+
 
 
 
