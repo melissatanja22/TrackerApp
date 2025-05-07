@@ -51,13 +51,20 @@
     <!-- HISTORY VIEW -->
     <section id="historyView" class="view">
       <h2>Symptom History</h2>
-      <div id="symptomCalendar" class="calendar"></div>
+    
+      <div class="calendar-nav">
+        <button onclick="changeCalendarOffset(-1)">←</button>
+        <span id="calendarMonthLabel"></span>
+        <button onclick="changeCalendarOffset(1)">→</button>
+      </div>
+    
+      <div id="symptomCalendar" class="calendar-grid"></div>
+    
       <div id="patternSummary"></div>
-
+    
       <form id="backlogForm">
         <h3>Log symptoms for a previous day</h3>
-        <input type="date" id="backlogDate" max="{{today}}" required />
-        
+        <input type="date" id="backlogDate" required />
         <label><input type="checkbox" name="backlogSymptom" value="cramps" /> Cramps</label>
         <label><input type="checkbox" name="backlogSymptom" value="anxiety" /> Anxiety</label>
         <label><input type="checkbox" name="backlogSymptom" value="fatigue" /> Fatigue</label>
@@ -65,11 +72,33 @@
         <label><input type="checkbox" name="backlogSymptom" value="appetite-increase" /> Appetite Increase</label>
         <label><input type="checkbox" name="backlogSymptom" value="appetite-decrease" /> Appetite Decrease</label>
         <input type="text" id="customBacklogSymptom" placeholder="Add custom symptom..." />
-      
         <button type="submit">Save Symptoms</button>
       </form>
-      
+    
+      <div id="legend">
+        <h4>Legend</h4>
+        <div class="legend-block">
+          <p><strong>Cycle Phase (dot in center):</strong></p>
+          <ul>
+            <li><span class="dot" style="background:#6C0E32;"></span> Menstrual</li>
+            <li><span class="dot" style="background:#A53860;"></span> Follicular</li>
+            <li><span class="dot" style="background:#DA627D;"></span> Ovulation</li>
+            <li><span class="dot" style="background:#FFA5AB;"></span> Luteal</li>
+          </ul>
+        </div>
+        <div class="legend-block">
+          <p><strong>Symptom (border color):</strong></p>
+          <ul>
+            <li style="border-left: 4px solid #6C0E32;"> Cramps</li>
+            <li style="border-left: 4px solid #227C9D;"> Fatigue</li>
+            <li style="border-left: 4px solid #0F7173;"> Appetite</li>
+            <li style="border-left: 4px solid #BDC1EF;"> Anxiety</li>
+            <li style="border-left: 4px solid #5C415D;"> Acne</li>
+          </ul>
+        </div>
+      </div>
     </section>
+    
 
   </div>
   
