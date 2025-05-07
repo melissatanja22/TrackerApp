@@ -299,14 +299,30 @@ function loadSymptomCalendar() {
     day.textContent = d;
     container.appendChild(day);
 
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
+    const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  const isConfirmedPeriod = logged.includes(iso);
+  const isPredictedMenstrual = phase === "menstrual" && !isConfirmedPeriod;
+
+  const dot = document.createElement("div");
+  dot.classList.add("dot");
+
+  if (isPredictedMenstrual) {
+    dot.style.background = `repeating-linear-gradient(
+    -45deg,
+    #6C0E32,
+    #6C0E32 4px,
+    #FFF2F3 4px,
+    #FFF2F3 8px
+    )`;
+    //dot.style.border = "1px solid #6C0E32";
+  } else {
     dot.style.backgroundColor = {
       menstrual: "#6C0E32",
       follicular: "#A53860",
       ovulation: "#DA627D",
       luteal: "#FFA5AB"
     }[phase];
+  }
 
     day.appendChild(dot);
 
