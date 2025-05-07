@@ -291,6 +291,7 @@ form button {
 
 .arrow-btn {
   border: none;
+  background: #FFF2F3;
   border-radius: 50%;
   font-size: 1.2rem;
   width: 36px;
