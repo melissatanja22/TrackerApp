@@ -69,7 +69,6 @@ nav button {
 
 
 .day {
-  padding: 10px;
   text-align: center;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -215,11 +214,11 @@ form button {
 
 
 .day .dot {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   position: absolute;
-  margin-top: 2px;
+  /*margin-top: 2px;*/
 }
 
 /* Symptom border colors */
