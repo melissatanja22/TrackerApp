@@ -313,6 +313,8 @@ function loadSymptomCalendar() {
 
     day.textContent = d;
     container.appendChild(day);
+
+    console.log(`${iso}: ${phase}`);
   }
 
 }
@@ -478,6 +480,3 @@ const symptomOptions = [
 
 renderSymptomToggles("realtimeToggles", symptomOptions);
 renderSymptomToggles("backlogToggles", symptomOptions);
-
-
-console.log(`${iso}: ${phase}`);
