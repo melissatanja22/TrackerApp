@@ -213,6 +213,17 @@ function loadCalendar() {
     const day = document.createElement("div");
     day.classList.add("day");
 
+    const isFuture = date >= new Date().setHours(0,0,0,0);
+const isLogged = logged.includes(iso);
+const isPredicted = cycleDay < 5 && isFuture && !isLogged;
+
+if (isLogged) {
+  day.classList.add("menstrual");
+} else if (isPredicted) {
+  day.classList.add("predicted-menstrual");
+}
+
+
     if (logged.includes(iso)) {
       day.classList.add("menstrual");
     } else if (cycleDay < 5 && date >= new Date()) {
