@@ -266,11 +266,6 @@ function loadSymptomCalendar() {
   const loggedPeriods = (JSON.parse(localStorage.getItem("loggedPeriods")) || []).sort();
   const lastPeriod = getLastPeriod();
 
-  const date = new Date(year, month, d);
-  const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-  const phase = getPhase(cycleDay);
-
   const label = document.getElementById("calendarMonthLabel");
   label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
 
@@ -285,6 +280,10 @@ function loadSymptomCalendar() {
     const iso = date.toISOString().split("T")[0];
     const day = document.createElement("div");
     day.classList.add("day");
+
+    const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+    const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
+    const phase = getPhase(cycleDay);
 
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
