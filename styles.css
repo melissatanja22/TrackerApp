@@ -271,12 +271,11 @@ form button {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .symptom-toggle:hover {
   transform: scale(1.05);
-  opacity: 1;
 }
 
 .symptom-toggle.selected {
@@ -291,7 +290,6 @@ form button {
 .symptom-acne      { background: #EF6461; color: #fff;}
 
 .arrow-btn {
-  background-color: #ffe3ec;
   border: none;
   border-radius: 50%;
   font-size: 1.2rem;
@@ -299,5 +297,4 @@ form button {
   height: 36px;
   cursor: pointer;
   color: #A53860;
-  transition: background-color 0.2s ease, transform 0.2s ease;
 }

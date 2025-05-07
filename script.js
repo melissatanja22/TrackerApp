@@ -243,79 +243,75 @@ function loadSymptomCalendar() {
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
-    const label1 = document.createElement("div");
-    label1.classList.add("calendar-label");
-    label1.textContent = day;
-    container.appendChild(label1);
-
-    const label2 = document.createElement("div");
-    label2.classList.add("calendar-label");
-    label2.textContent = day;
-    container.appendChild(label2);
+    const label = document.createElement("div");
+    label.classList.add("calendar-label");
+    label.textContent = day;
+    container.appendChild(label);
   });
 
+  // Base month with offset
   const base = new Date();
   base.setMonth(base.getMonth() + calendarOffset);
+  const year = base.getFullYear();
+  const month = base.getMonth();
 
-  const months = [
-    new Date(base.getFullYear(), base.getMonth(), 1),
-    //new Date(base.getFullYear(), base.getMonth() + 1, 1),
-  ];
+  const start = new Date(year, month, 1);
+  const end = new Date(year, month + 1, 0);
+  const startDay = start.getDay();
 
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
   const avgLength = getAvgCycleLength();
   const lastPeriod = getLastPeriod();
 
+  // Month label update
   const label = document.getElementById("calendarMonthLabel");
-  label.textContent = `${months[0].toLocaleString('default', { month: 'long' })} & ${months[1].toLocaleString('default', { month: 'long' })} ${months[1].getFullYear()}`;
+  label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
 
-  months.forEach(monthStart => {
-    const month = monthStart.getMonth();
-    const year = monthStart.getFullYear();
-    const end = new Date(year, month + 1, 0);
-    const startDay = new Date(year, month, 1).getDay();
+  // Blank slots to align first day
+  for (let i = 0; i < startDay; i++) {
+    const blank = document.createElement("div");
+    blank.classList.add("day");
+    container.appendChild(blank);
+  }
 
-    for (let i = 0; i < startDay; i++) {
-      const blank = document.createElement("div");
-      blank.classList.add("day");
-      container.appendChild(blank);
-    }
+  for (let d = 1; d <= end.getDate(); d++) {
+    const date = new Date(year, month, d);
+    const iso = date.toISOString().split("T")[0];
 
-    for (let d = 1; d <= end.getDate(); d++) {
-      const date = new Date(year, month, d);
-      const iso = date.toISOString().split("T")[0];
-      const day = document.createElement("div");
-      day.classList.add("day");
+    const day = document.createElement("div");
+    day.classList.add("day");
 
-      if (symptomLog[iso]) {
-        let primary = symptomLog[iso][0] || '';
-        if (primary.includes("appetite")) primary = "appetite";
-        if (!["cramps", "fatigue", "appetite", "anxiety", "acne"].includes(primary)) {
-          primary = "anxiety";
-        }
-        day.classList.add(`symptom-${primary}`);
-        day.title = symptomLog[iso].join(", ");
+    // Apply symptom border if any
+    if (symptomLog[iso]) {
+      let primary = symptomLog[iso][0] || '';
+      if (primary.includes("appetite")) primary = "appetite";
+      if (!["cramps", "fatigue", "appetite", "anxiety", "acne"].includes(primary)) {
+        primary = "anxiety";
       }
-
-      const offset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-      const cycleDay = ((offset % avgLength) + avgLength) % avgLength;
-      const phase = getPhase(cycleDay);
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-
-      dot.style.backgroundColor = {
-        menstrual: "#6C0E32",
-        follicular: "#A53860",
-        ovulation: "#DA627D",
-        luteal: "#FFA5AB"
-      }[phase];
-
-      day.textContent = d;
-      day.appendChild(dot);
-      container.appendChild(day);
+      day.classList.add(`symptom-${primary}`);
+      day.title = symptomLog[iso].join(", ");
     }
-  });
+
+    // Add phase dot
+    const offset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+    const cycleDay = ((offset % avgLength) + avgLength) % avgLength;
+    const phase = getPhase(cycleDay);
+
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    dot.style.backgroundColor = {
+      menstrual: "#6C0E32",
+      follicular: "#A53860",
+      ovulation: "#DA627D",
+      luteal: "#FFA5AB"
+    }[phase];
+
+    day.textContent = d;
+    day.appendChild(dot);
+    container.appendChild(day);
+  }
 }
+
 
 function summarizePatterns() {
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
