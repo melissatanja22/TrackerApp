@@ -127,16 +127,16 @@ function getCyclePhaseForDate(date) {
   const isLogged = logged.includes(iso);
   const lastPeriod = getLastPeriod(date);
 
-  // 🚫 If it's a past day and no period has been logged before it, skip
-  if (!isFuture && !isLogged && !lastPeriod) return null;
+  if (!isFuture && !isLogged && !lastPeriod) return null; // ❗️ NO phase if no logged anchor
+  if (!lastPeriod || date < lastPeriod) return null; // ❗️ Don't show phase before last period
 
-  // ✅ If we found a previous logged period, allow phase tracking from it
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
 
   return getPhase(dayOfCycle);
 }
+
 
 
 
