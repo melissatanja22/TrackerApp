@@ -121,28 +121,31 @@ function getLastPeriod(beforeDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const iso = date.getFullYear() + '-' +
-              String(date.getMonth() + 1).padStart(2, '0') + '-' +
-              String(date.getDate()).padStart(2, '0');
+  const iso = date.toISOString().split("T")[0];
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
+
   const lastPeriod = getLastPeriod(date);
+  if (!lastPeriod) return null;
 
-  // 🔐 If there’s no logged period before or on this day, show nothing
-  if (!lastPeriod || date < lastPeriod) return null;
-
-  // 🔴 Only return "menstrual" if it was manually logged
-  if (isLogged) return "menstrual";
-
-  // 🌀 Otherwise, calculate phase forward from last logged period
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  const dayOfCycle = ((daysSince + 1) % avgLength + avgLength) % avgLength; // day 1 start
+  const dayOfCycle = (((daysSince) % avgLength) + avgLength) % avgLength;
 
-  return getPhase(dayOfCycle);
+  // ✅ MENSTRUAL phase only if this day is explicitly logged
+  if (logged.includes(iso)) {
+    return "menstrual";
+  }
+
+  // ✅ Allow predictions in the future based on last logged period
+  if (isFuture) {
+    return getPhase(dayOfCycle);
+  }
+
+  // ❌ Otherwise, no phase in the past unless it's manually logged
+  return null;
 }
-
 
 
 
