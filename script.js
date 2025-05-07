@@ -192,6 +192,9 @@ function loadCalendar() {
   const lastPeriod = getLastPeriod();
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
+  const label = document.getElementById("regCalendarMonthLabel");
+  label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
+
   // Add blank cells to align the first day
   for (let i = 0; i < startDay; i++) {
     const empty = document.createElement("div");
