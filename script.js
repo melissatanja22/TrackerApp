@@ -261,18 +261,55 @@ document.getElementById("symptomForm").addEventListener("submit", async function
 function loadSymptomCalendar() {
   const container = document.getElementById("symptomCalendar");
   container.innerHTML = "";
-  const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
-  const days = Object.keys(log).sort().slice(-30);
 
-  days.forEach(dateStr => {
-    const date = new Date(dateStr);
-    const day = document.createElement("div");
-    day.classList.add("day", "symptom-day");
-    day.title = log[dateStr].join(", ");
-    day.innerText = date.getDate();
-    container.appendChild(day);
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  weekdays.forEach(day => {
+    const label = document.createElement("div");
+    label.classList.add("calendar-label");
+    label.textContent = day;
+    container.appendChild(label);
   });
-}
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const start = new Date(year, month, 1);
+  const end = new Date(year, month + 1, 0);
+  const startDay = start.getDay();
+
+  const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
+
+  // Blank cells to align the first day
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement("div");
+    empty.classList.add("day");
+    container.appendChild(empty);
+  }
+
+  for (let d = 1; d <= end.getDate(); d++) {
+    const date = new Date(year, month, d);
+    const iso = date.toISOString().split("T")[0];
+
+    const day = document.createElement("div");
+    day.classList.add("day");
+
+    if (symptomLog[iso]) {
+      day.title = symptomLog[iso].join(", ");
+      const symptoms = symptomLog[iso];
+      
+      // Determine which class to apply
+      let primary = symptoms[0];
+    
+      if (primary.includes("appetite")) primary = "appetite"; // combine
+      if (!["cramps", "anxiety", "fatigue", "acne", "appetite"].includes(primary)) {
+        primary = "anxiety"; // default/fallback
+      }
+    
+      day.classList.add(`symptom-${primary}`);
+    }
+    
+}}
+
 
 function summarizePatterns() {
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
@@ -348,3 +385,27 @@ window.addEventListener("load", () => {
     updateCycleInfo();
   }
 });
+
+document.getElementById("backlogForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const date = document.getElementById("backlogDate").value;
+  if (!date) return alert("Please choose a date.");
+
+  const selected = [...document.querySelectorAll('input[name="backlogSymptom"]:checked')]
+    .map(i => i.value);
+
+  const custom = document.getElementById("customBacklogSymptom").value.trim();
+  if (custom) selected.push(custom);
+
+  const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
+  log[date] = selected;
+  localStorage.setItem("symptomLog", JSON.stringify(log));
+  await saveUserData();
+
+  this.reset();
+  loadSymptomCalendar();
+  summarizePatterns();
+
+  alert(`Symptoms logged for ${date}`);
+});
+

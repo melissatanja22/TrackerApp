@@ -180,3 +180,34 @@ form button {
 }
 
 
+#backlogForm {
+  margin-top: 1.5rem;
+  background: #fff0f5;
+  border-radius: 10px;
+  padding: 1rem;
+}
+#backlogForm h3 {
+  margin-top: 0;
+  color: #a25b7f;
+}
+
+.symptom-cramps {
+  border: 2px solid #d95f5f;
+  background: #fcecec;
+}
+.symptom-anxiety {
+  border: 2px solid #9a82d3;
+  background: #f3ecff;
+}
+.symptom-fatigue {
+  border: 2px solid #227C9D;
+  background: #fff4e6;
+}
+.symptom-acne {
+  border: 2px solid #d973b3;
+  background: #ffe6f1;
+}
+.symptom-appetite {
+  border: 2px solid #74b49b;
+  background: #e8f9f1;
+}

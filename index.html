@@ -51,8 +51,25 @@
     <!-- HISTORY VIEW -->
     <section id="historyView" class="view">
       <h2>Symptom History</h2>
-      <div id="symptomCalendar"></div>
+      <div id="symptomCalendar" class="calendar"></div>
+
       <div id="patternSummary"></div>
+
+      <form id="backlogForm">
+        <h3>Log symptoms for a previous day</h3>
+        <input type="date" id="backlogDate" max="{{today}}" required />
+        
+        <label><input type="checkbox" name="backlogSymptom" value="cramps" /> Cramps</label>
+        <label><input type="checkbox" name="backlogSymptom" value="anxiety" /> Anxiety</label>
+        <label><input type="checkbox" name="backlogSymptom" value="fatigue" /> Fatigue</label>
+        <label><input type="checkbox" name="backlogSymptom" value="acne" /> Acne</label>
+        <label><input type="checkbox" name="backlogSymptom" value="appetite-increase" /> Appetite Increase</label>
+        <label><input type="checkbox" name="backlogSymptom" value="appetite-decrease" /> Appetite Decrease</label>
+        <input type="text" id="customBacklogSymptom" placeholder="Add custom symptom..." />
+      
+        <button type="submit">Save Symptoms</button>
+      </form>
+      
     </section>
 
   </div>
