@@ -219,6 +219,9 @@ form button {
   height: 20px;
   border-radius: 50%;
   margin-top: 2px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Symptom border colors */
