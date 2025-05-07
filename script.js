@@ -124,6 +124,7 @@ function getLastPeriod(beforeDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+
   const iso = date.getFullYear() + '-' +
               String(date.getMonth() + 1).padStart(2, '0') + '-' +
               String(date.getDate()).padStart(2, '0');
@@ -131,28 +132,46 @@ function getCyclePhaseForDate(date) {
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
 
-  const lastPeriod = getLastPeriod(date);
-  if (!lastPeriod || date < lastPeriod) return null;
+  const sortedLogged = logged
+    .map(d => new Date(d + "T12:00:00"))
+    .sort((a, b) => b - a);
 
+  if (sortedLogged.length === 0) return null;
+
+  const latestLog = sortedLogged[0];
+  const earliestLog = sortedLogged[sortedLogged.length - 1];
+
+  // 🚫 Don't show phases before the earliest logged day
+  if (date < earliestLog) return null;
+
+  const daysSinceLatestLog = Math.floor((date - latestLog) / (1000 * 60 * 60 * 24));
   const totalMenstrualDays = 5;
-  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
 
-  // Get all logged days in current 5-day menstrual window
+  // Count how many logged days exist in the menstrual window (latestLog + 5)
   const confirmedCount = logged.filter(d => {
     const dDate = new Date(d + "T12:00:00");
-    return dDate >= lastPeriod && dDate < new Date(lastPeriod.getTime() + totalMenstrualDays * 86400000);
+    return dDate >= latestLog && dDate < new Date(latestLog.getTime() + totalMenstrualDays * 86400000);
   }).length;
 
-  if (daysSince < totalMenstrualDays) {
-    if (isLogged) return "menstrual"; // 🔴 confirmed
-    if (isFuture && daysSince < (totalMenstrualDays - confirmedCount)) return "predicted-menstrual"; // 🔮
-    return null;
+  // 🔴 Manually logged days are always menstrual
+  if (isLogged) return "menstrual";
+
+  // 🔮 Predicted menstrual if it's inside the window from latest log and we haven’t logged all 5 yet
+  if (date > latestLog && daysSinceLatestLog < (totalMenstrualDays - confirmedCount)) {
+    return "predicted-menstrual";
   }
 
-  const avgLength = getAvgCycleLength();
-  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
-  return getPhase(dayOfCycle);
+  // 🌀 Other cycle phases only if we're after the latest period
+  if (date >= new Date(latestLog.getTime() + totalMenstrualDays * 86400000)) {
+    const avgLength = getAvgCycleLength();
+    const dayOfCycle = ((Math.floor((date - latestLog) / (1000 * 60 * 60 * 24))) % avgLength);
+    return getPhase(dayOfCycle);
+  }
+
+  // 🚫 Otherwise, show nothing
+  return null;
 }
+
 
 
 
