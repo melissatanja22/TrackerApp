@@ -127,14 +127,17 @@ function getCyclePhaseForDate(date) {
   const isLogged = logged.includes(iso);
   const lastPeriod = getLastPeriod(date);
 
-  if (!isFuture && !isLogged && !lastPeriod) return null; // ⛔ no phase
+  // 🚫 If it's a past day and no period has been logged before it, skip
+  if (!isFuture && !isLogged && !lastPeriod) return null;
 
+  // ✅ If we found a previous logged period, allow phase tracking from it
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
 
   return getPhase(dayOfCycle);
 }
+
 
 
 
@@ -176,7 +179,7 @@ function updateCycleInfo() {
   const today = new Date();
   const daysSince = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = daysSince % avgLength;
-  const phase = getPhase(dayOfCycle);
+  const phase = getCyclePhaseForDate(date);
 
   const cycleInfo = document.getElementById("cycleInfo");
   const cycleTips = document.getElementById("cycleTips");
@@ -390,7 +393,7 @@ function summarizePatterns() {
     const day = new Date(date);
     const dayOffset = Math.floor((day - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-    const phase = getPhase(cycleDay);
+    const phase = getCyclePhaseForDate(date);
     log[date].forEach(symptom => {
       const key = `${symptom}_${phase}`;
       counts[key] = (counts[key] || 0) + 1;
@@ -533,8 +536,8 @@ const symptomOptions = [
 renderSymptomToggles("realtimeToggles", symptomOptions);
 renderSymptomToggles("backlogToggles", symptomOptions);
 
-function addPhaseDotToDay(dayElement, cycleDay) {
-  const phase = getPhase(cycleDay);
+function addPhaseDotToDay(dayElement, date) {
+  const phase = getCyclePhaseForDate(date);
   const dot = document.createElement("div");
   dot.classList.add("dot");
   dot.style.backgroundColor = {
