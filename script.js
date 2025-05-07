@@ -259,7 +259,7 @@ function loadSymptomCalendar() {
 
   const months = [
     new Date(base.getFullYear(), base.getMonth(), 1),
-    new Date(base.getFullYear(), base.getMonth() + 1, 1),
+    //new Date(base.getFullYear(), base.getMonth() + 1, 1),
   ];
 
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
