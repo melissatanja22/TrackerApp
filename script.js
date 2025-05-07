@@ -334,7 +334,7 @@ function loadSymptomCalendar() {
   }
 
   for (let d = 1; d <= end.getDate(); d++) {
-    const date = new Date(year, month, d);
+    const date = new Date(year, month, d, 12, 0, 0);
     const iso = date.toISOString().split("T")[0];
     const day = document.createElement("div");
     day.classList.add("day");
