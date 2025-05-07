@@ -225,7 +225,6 @@ form button {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  margin-top: 1px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

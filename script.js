@@ -318,7 +318,12 @@ day.appendChild(number);
     #FFF2F3 4px,
     #FFF2F3 8px
     )`;
-    //dot.style.border = "1px solid #6C0E32";
+    dot.style.color = "color: #fff;"
+  dot.style.textShadow = `
+    -1px -1px 0 #6C0E32,
+     1px -1px 0 #6C0E32,
+    -1px  1px 0 #6C0E32,
+     1px  1px 0 #6C0E32`;
   } else {
     dot.style.backgroundColor = {
       menstrual: "#6C0E32",
