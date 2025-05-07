@@ -278,7 +278,7 @@ function loadCalendar() {
       day.classList.add("menstrual");
     } else if (cycleDay < 5) {
       day.classList.add("predicted-menstrual");
-    } else {
+    } else if (cycleDay > 4){
       day.classList.add(phase);
     }
 
