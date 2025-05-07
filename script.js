@@ -105,6 +105,7 @@ async function saveUserData() {
 }
 
 // --- CORE LOGIC ---
+
 function getLastPeriod() {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
   if (!logged.length) return new Date(); // fallback
@@ -139,6 +140,8 @@ function getPhaseName(phase) {
   };
   return map[phase];
 }
+
+
 
 // --- CYCLE INFO ---
 function updateCycleInfo() {
@@ -309,8 +312,6 @@ function loadSymptomCalendar() {
       }[phase];
 
       day.appendChild(dot);
-
-      console.log(`${iso}: ${phase}`);
     }
 
     day.textContent = d;
