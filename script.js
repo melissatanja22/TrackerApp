@@ -294,7 +294,18 @@ function loadSymptomCalendar() {
     day.textContent = d;
     container.appendChild(day);
 
-    addPhaseDotToDay(day, date);
+    const dot = document.createElement("div");
+dot.classList.add("dot");
+dot.style.backgroundColor = {
+  menstrual: "#6C0E32",
+  follicular: "#A53860",
+  ovulation: "#DA627D",
+  luteal: "#FFA5AB"
+}[phase];
+
+day.appendChild(dot);
+
+    //addPhaseDotToDay(day, date);
 
   }
 
