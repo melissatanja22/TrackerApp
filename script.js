@@ -140,6 +140,7 @@ function getCyclePhaseForDate(date) {
   const anchor = getCycleAnchor(date);
   if (!anchor || date < anchor) return null;
   const lastPeriod = getLastPeriod();
+  console.log(lastPeriod);
   console.log(anchor);
 
 
