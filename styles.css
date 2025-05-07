@@ -74,6 +74,7 @@ nav button {
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 50;
+  position: relative;
 }
 
 .menstrual { background: #6C0E32; color: #fff;}
@@ -267,11 +268,8 @@ form button {
 }
 
 .legend-symptom {
-  width: 14px;
-  height: 14px;
-  border: 3px solid;
-  border-radius: 4px;
-  background: none;
+  width: 10px;
+  height: 10px;
   display: inline-block;
 }
 
