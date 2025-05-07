@@ -309,12 +309,12 @@ function loadSymptomCalendar() {
       }[phase];
 
       day.appendChild(dot);
+
+      console.log(`${iso}: ${phase}`);
     }
 
     day.textContent = d;
     container.appendChild(day);
-
-    console.log(`${iso}: ${phase}`);
   }
 
 }
