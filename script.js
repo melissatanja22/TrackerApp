@@ -110,24 +110,32 @@ async function saveUserData() {
 // --- CORE LOGIC ---
 
 
-function getLastPeriod(date) {
+function getLastPeriod(beforeDate = new Date()) {
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  const filtered = logged
+    .map(p => new Date(p))
+    .filter(d => d <= beforeDate)
+    .sort((a, b) => b - a);
+  return filtered[0] || new Date(); // fallback to today if nothing found
+}
+
+function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
   const iso = date.toISOString().split("T")[0];
 
-  // Only calculate cycle phase if the date is today or in the future
-  // OR if it's logged manually
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
 
-  if (!isFuture && !isLogged) return null; // ⛔ No phase
+  if (!isFuture && !isLogged) return null; // ⛔ No phase if past and not logged
 
-  const lastPeriod = getLastPeriod(date);
+  const lastPeriod = getLastPeriod(date); // ✅ this is fine now
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
 
   return getPhase(dayOfCycle);
 }
+
 
 
 
@@ -222,7 +230,7 @@ function loadCalendar() {
     const iso = date.toISOString().split("T")[0];
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-    const phase = getPhase(cycleDay);
+    const phase = getCyclePhaseForDate(date);
 
     const day = document.createElement("div");
     day.classList.add("day");
