@@ -34,6 +34,9 @@ const db = getFirestore(app);
 
 // --- GLOBAL ---
 let currentUser = null;
+let calendarOffset = 0;
+
+
 
 // --- AUTH ---
 document.getElementById("loginBtn").addEventListener("click", () => {
@@ -482,8 +485,6 @@ document.getElementById("backlogForm").addEventListener("submit", async function
 
   alert(`Symptoms logged for ${date}`);
 });
-
-let calendarOffset = 0;
 
 const symptomOptions = [
   { label: "Cramps", class: "cramps", value: "cramps" },
