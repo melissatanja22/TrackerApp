@@ -127,36 +127,33 @@ function getCyclePhaseForDate(date) {
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
+
   const lastPeriod = getLastPeriod(date);
   if (!lastPeriod || date < lastPeriod) return null;
 
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
 
-  // 🔴 Count how many manually logged menstrual days exist after lastPeriod
-  const loggedMenstrualCount = logged.filter(d => {
+  // 🔴 Total menstrual phase is 5 days max
+  const totalMenstrualDays = 5;
+
+  // Count how many logged menstrual days are within the 5-day window
+  const confirmedMenstrualDays = logged.filter(d => {
     const dDate = new Date(d + "T12:00:00");
-    return dDate >= lastPeriod && dDate < new Date(lastPeriod.getTime() + 5 * 24 * 60 * 60 * 1000);
+    return dDate >= lastPeriod && dDate < new Date(lastPeriod.getTime() + totalMenstrualDays * 86400000);
   }).length;
 
-  const totalMenstrualSpan = 5;
-
-  // If date is within menstrual window...
-  if (daysSince < totalMenstrualSpan) {
-    // If it's logged manually
+  // If current date is within 5-day menstrual window...
+  if (daysSince < totalMenstrualDays) {
     if (isLogged) return "menstrual";
-
-    // If not logged, but still within 5-day window and room for predictions
-    if (isFuture && daysSince < (totalMenstrualSpan - loggedMenstrualCount)) {
-      return "menstrual";
+    if (isFuture && daysSince < (totalMenstrualDays - confirmedMenstrualDays)) {
+      return "menstrual"; // predicted
     }
-
-    // Otherwise, past date or already filled
-    return null;
+    return null; // past unlogged days won't show menstrual
   }
 
-  // After menstrual window, continue normal phase logic
-  const dayOfCycle = ((daysSince + 1) % avgLength + avgLength) % avgLength;
+  // 📅 After menstrual phase, continue with cycle phases
   return getPhase(dayOfCycle);
 }
 
