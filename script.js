@@ -165,18 +165,10 @@ function getCyclePhaseForDate(date) {
   const cycleDayOffset = daysSince;
   const cycleDay = ((cycleDayOffset % avgLength) + avgLength) % avgLength;
 
-  console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
+  //console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
   return getPhase(cycleDay);
 
 }
-
-
-
-
-
-
-
-
 
 function getAvgCycleLength() {
   const dates = JSON.parse(localStorage.getItem("periodDates")) || [];
@@ -289,27 +281,45 @@ function loadCalendar() {
   }
 }
 
-function togglePeriodDate(dateStr) {
-  const date = new Date(dateStr + "T12:00:00"); // lock it to midday
+function togglePeriodDate(date) {
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+
   const iso = date.getFullYear() + '-' +
               String(date.getMonth() + 1).padStart(2, '0') + '-' +
               String(date.getDate()).padStart(2, '0');
 
-  let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  const alreadyLogged = logged.includes(iso);
 
-  if (logged.includes(iso)) {
-    logged = logged.filter(d => d !== iso);
+  if (alreadyLogged) {
+    // Remove the date
+    const newLogged = logged.filter(d => d !== iso);
+    localStorage.setItem("loggedPeriods", JSON.stringify(newLogged));
   } else {
+    // Add the new date
     logged.push(iso);
+
+    // Sort all logged dates
+    const sorted = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => a - b);
+
+    // Rebuild the list so it's always clean and ordered
+    const updated = sorted.map(d =>
+      d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0')
+    );
+
+    localStorage.setItem("loggedPeriods", JSON.stringify(updated));
+
+    // 💬 OPTIONAL: Log their cycle day for debug
+    const first = sorted[0];
+    const clicked = new Date(date.getTime());
+    const cycleDay = Math.floor((clicked - first) / (1000 * 60 * 60 * 24)) + 1;
+
+    console.log(`${iso} → Logged as Cycle Day ${cycleDay}`);
   }
 
-  localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar();
-  loadSymptomCalendar(); // or loadSymptomCalendar()
+  loadCalendar(); // or loadSymptomCalendar(), depending on context
 }
-
-
-
 
 
 
