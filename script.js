@@ -121,7 +121,9 @@ function getLastPeriod(beforeDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const iso = date.toISOString().split("T")[0];
+  const iso = date.getFullYear() + '-' +
+            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+            String(date.getDate()).padStart(2, '0');
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
@@ -131,7 +133,7 @@ function getCyclePhaseForDate(date) {
 
   const avgLength = getAvgCycleLength();
   const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
+  const dayOfCycle = (((daysSince + 1) % avgLength) + avgLength) % avgLength;
 
   // ✅ MENSTRUAL phase only if this day is explicitly logged
   if (logged.includes(iso)) {
