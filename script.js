@@ -257,19 +257,13 @@ function loadCalendar() {
     const day = document.createElement("div");
     day.classList.add("day");
 
-
-const isLogged = logged.includes(iso);
-const isFuture = date >= new Date().setHours(0, 0, 0, 0);
-const isPredicted = cycleDay < 5 && isFuture && !isLogged;
-
-if (phase === "menstrual") {
-  day.classList.add("menstrual"); // solid red
-} else if (phase === "predicted-menstrual") {
-  day.classList.add("predicted-menstrual"); // striped or outlined
-} else if (phase) {
-  // follicular, ovulation, luteal
-  day.classList.add(`phase-${phase}`);
-}
+    if (logged.includes(iso)) {
+      day.classList.add("menstrual");
+    } else if (cycleDay < 5) {
+      day.classList.add("predicted-menstrual");
+    } else {
+      day.classList.add(phase);
+    }
 
     day.textContent = d;
     day.title = iso;
