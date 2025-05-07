@@ -155,10 +155,6 @@ function getCyclePhaseForDate(date) {
   }
   
   const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-  console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
-  return getPhase(cycleDay);
-  
-
   //console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
   return getPhase(cycleDay);
 
