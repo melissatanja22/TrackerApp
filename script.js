@@ -121,11 +121,7 @@ function getLastPeriod(beforeDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const iso = date.getFullYear() + '-' +
-            String(date.getMonth() + 1).padStart(2, '0') + '-' +
-            String(date.getDate()).padStart(2, '0');
-
-
+  const iso = date.toISOString().split("T")[0];
 
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
@@ -277,17 +273,23 @@ if (isLogged) {
 }
 
 function togglePeriodDate(dateStr) {
+  const clickedDate = new Date(dateStr + "T12:00:00"); // lock it to midday
+  const iso = clickedDate.getFullYear() + '-' +
+              String(clickedDate.getMonth() + 1).padStart(2, '0') + '-' +
+              String(clickedDate.getDate()).padStart(2, '0');
+
   let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
-  if (logged.includes(dateStr)) {
-    logged = logged.filter(d => d !== dateStr);
+  if (logged.includes(iso)) {
+    logged = logged.filter(d => d !== iso);
   } else {
-    logged.push(dateStr);
+    logged.push(iso);
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar(); // or loadSymptomCalendar(), depending on context
+  loadCalendar(); // or loadSymptomCalendar()
 }
+
 
 
 
