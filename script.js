@@ -184,7 +184,7 @@ function loadCalendar() {
     const label = document.createElement("div");
     label.classList.add("calendar-label");
     label.textContent = day;
-    container.appendChild(label);
+    calendar.appendChild(label);
   });
 
   const startDay = start.getDay(); // 0 (Sun) to 6 (Sat)
@@ -530,8 +530,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const right = document.querySelector('.arrow-btn.right-regular');
 
   if (left && right) {
-    leftArrow.addEventListener("click", () => changeCalendarOffset(-1));
-    rightArrow.addEventListener("click", () => changeCalendarOffset(1));
+    left.addEventListener("click", () => changeCalendarOffset(-1));
+    right.addEventListener("click", () => changeCalendarOffset(1));
   }
 });
 
