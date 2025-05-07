@@ -221,11 +221,11 @@ form button {
 }
 
 /* Symptom border colors */
-.symptom-cramps    { border: 2px solid #6C0E32; }
-.symptom-fatigue   { border: 2px solid #227C9D; }
-.symptom-appetite  { border: 2px solid #AFD5AA; }
-.symptom-anxiety   { border: 2px solid #FFBA49; }
-.symptom-acne      { border: 2px solid #EF6461; }
+.day.symptom-cramps    { border: 2px solid #6C0E32; }
+.day.symptom-fatigue   { border: 2px solid #227C9D; }
+.day.symptom-appetite  { border: 2px solid #AFD5AA; }
+.day.symptom-anxiety   { border: 2px solid #FFBA49; }
+.day.symptom-acne      { border: 2px solid #EF6461; }
 
 /* Legend styling */
 #legend {
@@ -317,6 +317,13 @@ form button {
   outline: 3px solid #ffffffcc;
   opacity: 1;
 }
+
+.symptom-toggle.symptom-cramps    { background: #6C0E32; color: white; }
+.symptom-toggle.symptom-fatigue   { background: #227C9D; color: white; }
+.symptom-toggle.symptom-appetite  { background: #AFD5AA; color: white; }
+.symptom-toggle.symptom-anxiety   { background: #FFBA49; color: white; }
+.symptom-toggle.symptom-acne      { background: #EF6461; color: white; }
+
 
 .arrow-btn {
   border: none;
