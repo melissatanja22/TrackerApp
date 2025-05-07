@@ -166,17 +166,10 @@ function getAvgCycleLength() {
 }
 
 function getPhase(day) {
-  const isFuture = date >= new Date().setHours(0, 0, 0, 0);
-  if (isFuture){
   if (day < 5) return "menstrual";
   if (day < 14) return "follicular";
   if (day < 16) return "ovulation";
   return "luteal";
-}else{
-  if (day < 14) return "follicular";
-  if (day < 16) return "ovulation";
-  return "luteal";
-}
 }
 
 function getPhaseName(phase) {
@@ -287,28 +280,17 @@ if (isLogged) {
 
 function togglePeriodDate(dateStr) {
   let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const isAlreadyLogged = logged.includes(dateStr);
 
-  if (isAlreadyLogged) {
-    // Remove clicked day and any automatically added menstrual days after it
-    const date = new Date(dateStr);
-    logged = logged.filter(d => {
-      const dDate = new Date(d);
-      const diff = (dDate - date) / (1000 * 60 * 60 * 24);
-      return d !== dateStr && !(diff > 0 && diff < 5);
-    });
+  if (logged.includes(dateStr)) {
+    logged = logged.filter(d => d !== dateStr);
   } else {
-    const date = new Date(dateStr);
-    for (let i = 0; i < 5; i++) {
-      const d = new Date(date);
-      d.setDate(date.getDate() + i);
-      logged.push(d.toISOString().split("T")[0]);
-    }
+    logged.push(dateStr);
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar(); // or loadSymptomCalendar(), depending on view
+  loadCalendar(); // or loadSymptomCalendar(), depending on context
 }
+
 
 
 
