@@ -147,11 +147,20 @@ function getCyclePhaseForDate(date) {
   // If current date is within 5-day menstrual window...
   if (daysSince < totalMenstrualDays) {
     if (isLogged) return "menstrual";
+  
+    // recalculate confirmed count EACH time
+    const confirmedMenstrualDays = logged.filter(d => {
+      const dDate = new Date(d + "T12:00:00");
+      return dDate >= lastPeriod && dDate < new Date(lastPeriod.getTime() + totalMenstrualDays * 86400000);
+    }).length;
+  
     if (isFuture && daysSince < (totalMenstrualDays - confirmedMenstrualDays)) {
       return "menstrual"; // predicted
     }
-    return null; // past unlogged days won't show menstrual
+  
+    return null;
   }
+  
 
   // 📅 After menstrual phase, continue with cycle phases
   return getPhase(dayOfCycle);
