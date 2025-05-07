@@ -249,7 +249,6 @@ function loadSymptomCalendar() {
     container.appendChild(label);
   });
 
-  // Base month with offset
   const base = new Date();
   base.setMonth(base.getMonth() + calendarOffset);
   const year = base.getFullYear();
@@ -261,13 +260,11 @@ function loadSymptomCalendar() {
 
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
   const avgLength = getAvgCycleLength();
-  const lastPeriod = getLastPeriod();
+  const loggedPeriods = (JSON.parse(localStorage.getItem("loggedPeriods")) || []).sort();
 
-  // Month label update
   const label = document.getElementById("calendarMonthLabel");
   label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
 
-  // Blank slots to align first day
   for (let i = 0; i < startDay; i++) {
     const blank = document.createElement("div");
     blank.classList.add("day");
@@ -277,11 +274,10 @@ function loadSymptomCalendar() {
   for (let d = 1; d <= end.getDate(); d++) {
     const date = new Date(year, month, d);
     const iso = date.toISOString().split("T")[0];
-
     const day = document.createElement("div");
     day.classList.add("day");
 
-    // Apply symptom border if any
+    // SYMPTOM STYLE
     if (symptomLog[iso]) {
       let primary = symptomLog[iso][0] || '';
       if (primary.includes("appetite")) primary = "appetite";
@@ -292,25 +288,34 @@ function loadSymptomCalendar() {
       day.title = symptomLog[iso].join(", ");
     }
 
-    // Add phase dot
-    const offset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-    const cycleDay = ((offset % avgLength) + avgLength) % avgLength;
-    const phase = getPhase(cycleDay);
+    // --- NEW: PHASE DOT CALCULATION FOR *ALL* DAYS ---
+    const closestPeriod = loggedPeriods
+      .map(p => new Date(p))
+      .filter(p => p <= date)
+      .sort((a, b) => b - a)[0]; // most recent before this day
 
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    dot.style.backgroundColor = {
-      menstrual: "#6C0E32",
-      follicular: "#A53860",
-      ovulation: "#DA627D",
-      luteal: "#FFA5AB"
-    }[phase];
+    if (closestPeriod) {
+      const offset = Math.floor((date - closestPeriod) / (1000 * 60 * 60 * 24));
+      const cycleDay = ((offset % avgLength) + avgLength) % avgLength;
+      const phase = getPhase(cycleDay);
+
+      const dot = document.createElement("div");
+      dot.classList.add("dot");
+      dot.style.backgroundColor = {
+        menstrual: "#6C0E32",
+        follicular: "#A53860",
+        ovulation: "#DA627D",
+        luteal: "#FFA5AB"
+      }[phase];
+
+      day.appendChild(dot);
+    }
 
     day.textContent = d;
-    day.appendChild(dot);
     container.appendChild(day);
   }
 }
+
 
 
 function summarizePatterns() {

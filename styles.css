@@ -241,6 +241,40 @@ form button {
 #legend li {
   margin: 4px 0;
 }
+
+.legend-grid {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.legend-column {
+  flex: 1;
+  min-width: 160px;
+}
+
+.legend-column ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.legend-column li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 6px 0;
+}
+
+.legend-symptom {
+  width: 14px;
+  height: 14px;
+  border: 3px solid;
+  border-radius: 4px;
+  background: none;
+  display: inline-block;
+}
+
 .dot {
   display: inline-block;
   width: 10px;
