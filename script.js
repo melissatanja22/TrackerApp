@@ -110,8 +110,7 @@ async function saveUserData() {
 // --- CORE LOGIC ---
 
 
-
-function getLastPeriod() {
+function getLastPeriod(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
   const iso = date.toISOString().split("T")[0];
 
