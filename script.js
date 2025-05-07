@@ -244,7 +244,11 @@ const isLogged = logged.includes(iso);
 const isFuture = date >= new Date().setHours(0, 0, 0, 0);
 const isPredicted = cycleDay < 5 && isFuture && !isLogged;
 
-
+if (logged.includes(iso)) {
+  day.classList.add("menstrual");
+} else if (cycleDay < 5 && isFuture) {
+  day.classList.add("predicted-menstrual");
+}
 
 
 if (isLogged) {
@@ -264,17 +268,29 @@ if (isLogged) {
 
 function togglePeriodDate(dateStr) {
   let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  console.log("Before toggle:", logged.includes(dateStr) ? "Logged" : "Not logged", dateStr);
+  const isAlreadyLogged = logged.includes(dateStr);
 
-  if (logged.includes(dateStr)) {
-    logged = logged.filter(d => d !== dateStr);
+  if (isAlreadyLogged) {
+    // Remove clicked day and any automatically added menstrual days after it
+    const date = new Date(dateStr);
+    logged = logged.filter(d => {
+      const dDate = new Date(d);
+      const diff = (dDate - date) / (1000 * 60 * 60 * 24);
+      return d !== dateStr && !(diff > 0 && diff < 5);
+    });
   } else {
-    logged.push(dateStr);
+    const date = new Date(dateStr);
+    for (let i = 0; i < 5; i++) {
+      const d = new Date(date);
+      d.setDate(date.getDate() + i);
+      logged.push(d.toISOString().split("T")[0]);
+    }
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar();
+  loadCalendar(); // or loadSymptomCalendar(), depending on view
 }
+
 
 
 
