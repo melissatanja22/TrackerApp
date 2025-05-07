@@ -139,9 +139,10 @@ function getCyclePhaseForDate(date) {
 
   const anchor = getCycleAnchor(date);
   if (!anchor || date < anchor) return null;
+  const lastPeriod = getLastPeriod();
 
 
-  const daysSince = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
+  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   if (daysSince < 0) return null;
 
   const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
