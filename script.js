@@ -543,4 +543,5 @@ function changeCalendarOffset(direction) {
   calendarOffset += direction;
   loadSymptomCalendar();
   loadCalendar();
+  console.log('loaded');
 }
