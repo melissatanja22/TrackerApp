@@ -264,7 +264,10 @@ function loadSymptomCalendar() {
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
   const avgLength = getAvgCycleLength();
   const loggedPeriods = (JSON.parse(localStorage.getItem("loggedPeriods")) || []).sort();
+  const lastPeriod = getLastPeriod();
 
+  const date = new Date(year, month, d);
+  const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
   const phase = getPhase(cycleDay);
 
