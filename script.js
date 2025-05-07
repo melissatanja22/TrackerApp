@@ -262,6 +262,18 @@ function loadSymptomCalendar() {
   const container = document.getElementById("symptomCalendar");
   container.innerHTML = "";
 
+  const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
+  const days = Object.keys(log).sort().slice(-30);
+
+  days.forEach(dateStr => {
+    const date = new Date(dateStr);
+    const day = document.createElement("div");
+    day.classList.add("day", "symptom-day");
+    day.title = log[dateStr].join(", ");
+    day.innerText = date.getDate();
+    container.appendChild(day);
+  });
+
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   weekdays.forEach(day => {
     const label = document.createElement("div");
@@ -307,8 +319,8 @@ function loadSymptomCalendar() {
     
       day.classList.add(`symptom-${primary}`);
     }
-    
-}}
+  }
+}
 
 
 function summarizePatterns() {
