@@ -125,54 +125,34 @@ function getLastPeriod(beforeDate = new Date()) {
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
-  // Format current date to ISO
   const iso = date.getFullYear() + '-' +
               String(date.getMonth() + 1).padStart(2, '0') + '-' +
               String(date.getDate()).padStart(2, '0');
 
   const isLogged = logged.includes(iso);
-  const isTodayOrFuture = date >= new Date().setHours(0, 0, 0, 0);
   const totalMenstrualDays = 5;
   const avgLength = getAvgCycleLength();
 
-  // Build sorted list of logged period dates
-  const loggedDates = logged
-    .map(d => new Date(d + "T12:00:00"))
-    .sort((a, b) => b - a);
+  // Get the most recent logged period up to this date
+  const loggedDates = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => b - a);
+  const lastPeriod = loggedDates.find(d => d <= date);
 
-  if (!loggedDates.length) return null;
+  if (!lastPeriod) return null;
 
-  const latestLog = loggedDates[0];
+  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+  if (daysSince < 0) return null;
 
-  // 💥 Don't calculate phases for days before the first logged period
-  if (date < latestLog) return null;
-
-  const daysSince = Math.floor((date - latestLog) / (1000 * 60 * 60 * 24));
-
-  // 🔴 Menstrual — manually logged days
+  // Menstrual (confirmed)
   if (isLogged) return "menstrual";
 
-  // 🔮 Predicted — only future days within the remaining menstrual window
-  const predictedCutoff = new Date(latestLog.getTime() + totalMenstrualDays * 86400000);
-  if (date >= latestLog && date < predictedCutoff && isTodayOrFuture) {
-    const confirmedInWindow = loggedDates.filter(d =>
-      d >= latestLog && d < predictedCutoff
-    ).length;
+  // Predicted menstrual (days 0–4 of cycle)
+  if (daysSince < totalMenstrualDays) return "predicted-menstrual";
 
-    if (daysSince < (totalMenstrualDays - confirmedInWindow)) {
-      return "predicted-menstrual";
-    }
-  }
-
-  // 🌀 Phases after menstrual window
-  if (date >= predictedCutoff) {
-    const dayOfCycle = ((daysSince - totalMenstrualDays) % avgLength + avgLength) % avgLength;
-    return getPhase(dayOfCycle);
-  }
-
-  // ❌ Otherwise, no phase
-  return null;
+  // Other cycle phases
+  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
+  return getPhase(dayOfCycle);
 }
+
 
 
 
