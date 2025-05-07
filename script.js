@@ -244,6 +244,8 @@ async function togglePeriodDate(date) {
 
 // --- SYMPTOMS ---
 function loadSymptomCalendar() {
+  console.log("Month offset:", calendarOffset);
+
   const container = document.getElementById("symptomCalendar");
   container.innerHTML = "";
 
