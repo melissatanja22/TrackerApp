@@ -126,33 +126,27 @@ function getCyclePhaseForDate(date) {
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
   const isLogged = logged.includes(iso);
 
-  // Find the most recent logged period before or on this date
   const lastPeriod = getLastPeriod(date);
   if (!lastPeriod) return null;
 
-  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
   const avgLength = getAvgCycleLength();
+  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
+  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
 
-  // 🔥 Block any past dates that are showing phase but aren’t tied to a recent logged period
-  const isPast = !isFuture;
-
-  if (isPast) {
-    // Only allow menstrual phase if within 5 days of a logged period
-    const loggedStrs = new Set(logged);
-    const window = [...Array(5).keys()].map(i => {
-      const d = new Date(lastPeriod);
-      d.setDate(d.getDate() + i);
-      return d.toISOString().split("T")[0];
-    });
-
-    if (!window.includes(iso)) return null;
+  // ✅ MENSTRUAL phase only if this day is explicitly logged
+  if (logged.includes(iso)) {
     return "menstrual";
   }
 
-  // ✅ For future dates, continue predicting normally from last logged period
-  const dayOfCycle = ((daysSince % avgLength) + avgLength) % avgLength;
-  return getPhase(dayOfCycle);
+  // ✅ Allow predictions in the future based on last logged period
+  if (isFuture) {
+    return getPhase(dayOfCycle);
+  }
+
+  // ❌ Otherwise, no phase in the past unless it's manually logged
+  return null;
 }
+
 
 
 function getAvgCycleLength() {
@@ -280,28 +274,17 @@ if (isLogged) {
 
 function togglePeriodDate(dateStr) {
   let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const isAlreadyLogged = logged.includes(dateStr);
 
-  if (isAlreadyLogged) {
-    // Remove clicked day and any automatically added menstrual days after it
-    const date = new Date(dateStr);
-    logged = logged.filter(d => {
-      const dDate = new Date(d);
-      const diff = (dDate - date) / (1000 * 60 * 60 * 24);
-      return d !== dateStr && !(diff > 0 && diff < 5);
-    });
+  if (logged.includes(dateStr)) {
+    logged = logged.filter(d => d !== dateStr);
   } else {
-    const date = new Date(dateStr);
-    for (let i = 0; i < 5; i++) {
-      const d = new Date(date);
-      d.setDate(date.getDate() + i);
-      logged.push(d.toISOString().split("T")[0]);
-    }
+    logged.push(dateStr);
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  loadCalendar(); // or loadSymptomCalendar(), depending on view
+  loadCalendar(); // or loadSymptomCalendar(), depending on context
 }
+
 
 
 
