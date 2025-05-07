@@ -172,9 +172,8 @@ function loadCalendar() {
   calendar.innerHTML = "";
   const base = new Date();
   base.setMonth(base.getMonth() + calendarOffset);
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+  const year = base.getFullYear();
+  const month = base.getMonth();
 
   const start = new Date(year, month, 1);
   const end = new Date(year, month + 1, 0);
