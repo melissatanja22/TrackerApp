@@ -314,6 +314,11 @@ function loadSymptomCalendar() {
     day.textContent = d;
     container.appendChild(day);
   }
+  const dot = document.createElement("div");
+dot.classList.add("dot");
+dot.style.backgroundColor = "red";
+day.appendChild(dot);
+
 }
 
 
