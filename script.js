@@ -265,14 +265,14 @@ if (logged.includes(iso)) {
   day.classList.add("predicted-menstrual");
 }
 
-
-if (isLogged) {
-  day.classList.add("menstrual");
-} else if (isPredicted) {
-  day.classList.add("predicted-menstrual");   
-} else {
-      day.classList.add(phase);
-    }
+if (phase === "menstrual") {
+  day.classList.add("menstrual"); // solid red
+} else if (phase === "predicted-menstrual") {
+  day.classList.add("predicted-menstrual"); // striped or outlined
+} else if (phase) {
+  // follicular, ovulation, luteal
+  day.classList.add(`phase-${phase}`);
+}
 
     day.textContent = d;
     day.title = iso;
