@@ -480,3 +480,4 @@ renderSymptomToggles("realtimeToggles", symptomOptions);
 renderSymptomToggles("backlogToggles", symptomOptions);
 
 
+console.log(`${iso}: ${phase}`);

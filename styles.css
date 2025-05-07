@@ -221,11 +221,11 @@ form button {
 }
 
 /* Symptom border colors */
-.day.symptom-cramps    { border: 2px solid #6C0E32; }
-.day.symptom-fatigue   { border: 2px solid #227C9D; }
-.day.symptom-appetite  { border: 2px solid #AFD5AA; }
-.day.symptom-anxiety   { border: 2px solid #FFBA49; }
-.day.symptom-acne      { border: 2px solid #EF6461; }
+.day.symptom-cramps    { border: 4px solid #6C0E32; }
+.day.symptom-fatigue   { border: 4px solid #227C9D; }
+.day.symptom-appetite  { border: 4px solid #AFD5AA; }
+.day.symptom-anxiety   { border: 4px solid #FFBA49; }
+.day.symptom-acne      { border: 4px solid #EF6461; }
 
 /* Legend styling */
 #legend {
