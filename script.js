@@ -296,7 +296,11 @@ function loadSymptomCalendar() {
       day.title = symptomLog[iso].join(", ");
     }
 
-    day.textContent = d;
+    const number = document.createElement("span");
+number.textContent = d;
+number.classList.add("day-number");
+day.appendChild(number);
+
     container.appendChild(day);
 
     const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];

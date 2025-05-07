@@ -82,6 +82,11 @@ nav button {
   z-index: 1;
 }
 
+.day-number {
+  position: relative;
+  z-index: 2;  /* Always on top */
+}
+
 .menstrual { background: #6C0E32; color: #fff;}
 .follicular { background: #A53860; color: #fff;}
 .ovulation { background: #DA627D; color: #fff;}
