@@ -511,8 +511,15 @@ function addPhaseDotToDay(dayElement, cycleDay) {
   dayElement.appendChild(dot);
 }
 
-document.querySelector('.arrow-btn.left').addEventListener('click', () => changeCalendarOffset(-1));
-document.querySelector('.arrow-btn.right').addEventListener('click', () => changeCalendarOffset(1));
+document.addEventListener("DOMContentLoaded", () => {
+  const leftArrow = document.querySelector('.arrow-btn.left');
+  const rightArrow = document.querySelector('.arrow-btn.right');
+
+  if (leftArrow && rightArrow) {
+    leftArrow.addEventListener("click", () => changeCalendarOffset(-1));
+    rightArrow.addEventListener("click", () => changeCalendarOffset(1));
+  }
+});
 
 
 function changeCalendarOffset(direction) {
