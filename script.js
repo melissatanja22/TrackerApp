@@ -237,27 +237,6 @@ async function togglePeriodDate(date) {
 
 
 // --- SYMPTOMS ---
-document.getElementById("symptomForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const today = new Date().toISOString().split("T")[0];
-  const symptoms = [
-    ...document.querySelectorAll('input[name="symptom"]:checked')
-  ].map(i => i.value);
-
-  const custom = document.getElementById("customSymptom").value.trim();
-  if (custom) symptoms.push(custom);
-
-  const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
-  log[today] = symptoms;
-  localStorage.setItem("symptomLog", JSON.stringify(log));
-  await saveUserData();
-
-  this.reset();
-  loadSymptomCalendar();
-  summarizePatterns();
-  alert("Symptoms saved.");
-});
-
 function loadSymptomCalendar() {
   const container = document.getElementById("symptomCalendar");
   container.innerHTML = "";
@@ -338,7 +317,6 @@ function loadSymptomCalendar() {
   });
 }
 
-
 function summarizePatterns() {
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
   const avgLength = getAvgCycleLength();
@@ -366,6 +344,27 @@ function summarizePatterns() {
     <ul>${summary.join("")}</ul>
   `;
 }
+
+document.getElementById("symptomForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const today = new Date().toISOString().split("T")[0];
+  const symptoms = [
+    ...document.querySelectorAll('input[name="symptom"]:checked')
+  ].map(i => i.value);
+
+  const custom = document.getElementById("customSymptom").value.trim();
+  if (custom) symptoms.push(custom);
+
+  const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
+  log[today] = symptoms;
+  localStorage.setItem("symptomLog", JSON.stringify(log));
+  await saveUserData();
+
+  this.reset();
+  loadSymptomCalendar();
+  summarizePatterns();
+  alert("Symptoms saved.");
+});
 
 // --- VIEW SWITCH ---
 window.showView = (id) => {
