@@ -239,22 +239,19 @@ if (isLogged) {
   }
 }
 
-async function togglePeriodDate(date) {
-  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const index = logged.indexOf(date);
+function togglePeriodDate(dateStr) {
+  let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
 
-  if (index > -1) {
-    logged.splice(index, 1); // remove
+  if (logged.includes(dateStr)) {
+    logged = logged.filter(d => d !== dateStr); // Unmark
   } else {
-    logged.push(date); // add
+    logged.push(dateStr); // Mark as menstrual
   }
 
   localStorage.setItem("loggedPeriods", JSON.stringify(logged));
-  await saveUserData();
-
-  loadCalendar();
-  updateCycleInfo();
+  loadCalendar(); // or loadSymptomCalendar() depending on view
 }
+
 
 
 // --- SYMPTOMS ---
