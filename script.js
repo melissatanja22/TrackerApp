@@ -265,6 +265,9 @@ function loadSymptomCalendar() {
   const avgLength = getAvgCycleLength();
   const loggedPeriods = (JSON.parse(localStorage.getItem("loggedPeriods")) || []).sort();
 
+  const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
+  const phase = getPhase(cycleDay);
+
   const label = document.getElementById("calendarMonthLabel");
   label.textContent = `${base.toLocaleString('default', { month: 'long' })} ${year}`;
 
@@ -295,15 +298,15 @@ function loadSymptomCalendar() {
     container.appendChild(day);
 
     const dot = document.createElement("div");
-dot.classList.add("dot");
-dot.style.backgroundColor = {
-  menstrual: "#6C0E32",
-  follicular: "#A53860",
-  ovulation: "#DA627D",
-  luteal: "#FFA5AB"
-}[phase];
+    dot.classList.add("dot");
+    dot.style.backgroundColor = {
+      menstrual: "#6C0E32",
+      follicular: "#A53860",
+      ovulation: "#DA627D",
+      luteal: "#FFA5AB"
+    }[phase];
 
-day.appendChild(dot);
+    day.appendChild(dot);
 
     //addPhaseDotToDay(day, date);
 
