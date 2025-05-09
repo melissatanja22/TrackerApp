@@ -735,3 +735,7 @@ function changeCalendarOffset(direction) {
 
 window.saveUserData = saveUserData;
 window.loadUserData = loadUserData;
+
+window.db = getFirestore(app);
+window.setDoc = setDoc;
+window.doc = doc;
