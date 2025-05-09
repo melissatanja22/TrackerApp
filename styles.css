@@ -231,12 +231,13 @@ form button {
   z-index: 0;
 }
 
-/* Symptom border colors */
+/* Symptom border colors 
 .day.symptom-cramps    { border: 4px solid #6C0E32; }
 .day.symptom-fatigue   { border: 4px solid #227C9D; }
 .day.symptom-appetite  { border: 4px solid #AFD5AA; }
 .day.symptom-anxiety   { border: 4px solid #FFBA49; }
 .day.symptom-acne      { border: 4px solid #EF6461; }
+*/
 
 /* Legend styling */
 #legend {
@@ -355,19 +356,23 @@ form button {
 }
 
 .symptom-ring {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -10%); /* adjust vertical position */
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
 }
 
 .phase-dot {
-  width: 10px;
-  height: 10px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  background-color: transparent;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
 }
 
 .symptom-dot {

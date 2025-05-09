@@ -476,9 +476,9 @@ renderSymptomDots(day, iso);
 const symptomColorMap = {
   cramps: "#6C0E32",
   fatigue: "#227C9D",
-  appetite: "#0F7173",
-  anxiety: "#BDC1EF",
-  acne: "#5C415D",
+  appetite: "#AFD5AA",
+  anxiety: "#FFBA49",
+  acne: "#EF6461",
   custom: "#AAA"
 };
 
