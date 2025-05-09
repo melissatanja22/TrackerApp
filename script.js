@@ -570,18 +570,7 @@ document.getElementById("symptomForm").addEventListener("submit", async function
   alert("Symptoms saved.");
 });
 
-function renderSymptomLegend() {
-  const container = document.getElementById("symptomLegend");
-  container.innerHTML = "";
 
-  const symptomColorMap = {
-  "cramps": "#6C0E32",
-  "fatigue": "#227C9D",
-  "appetite-increase": "#72B569",
-  "appetite-decrease": "#AFD5AA",
-  "anxiety": "#FFBA49",
-  "acne": "#EF6461",
-  };
 
   Object.entries(symptomColorMap).forEach(([symptom, color]) => {
     const item = document.createElement("div");
@@ -599,7 +588,7 @@ function renderSymptomLegend() {
     item.appendChild(label);
     container.appendChild(item);
   });
-}
+
 
 
 // --- VIEW SWITCH ---
