@@ -399,23 +399,11 @@ function loadSymptomCalendar() {
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
       let primary = symptomLog[iso][0] || '';
-    
-      // Fallback logic: if the symptom isn't styled, default to anxiety
-      const validSymptoms = [
-        "cramps",
-        "fatigue",
-        "appetite-increase",
-        "appetite-decrease",
-        "anxiety",
-        "acne"
-      ];
-    
-      if (!validSymptoms.includes(primary)) {
+      if (primary.includes("fatigue")) primary = "fatigue";
+      if (!["cramps", "fatigue", "appetite-increase", "appetite-decrease", "anxiety", "acne"].includes(primary)) {
         primary = "anxiety";
       }
-    
-      const safeClass = `symptom-${primary.replace(/\s+/g, "-")}`;
-      day.classList.add(safeClass);
+      day.classList.add(`symptom-${primary}`);
       day.title = symptomLog[iso].join(", ");
     }
     
