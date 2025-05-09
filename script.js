@@ -318,6 +318,7 @@ function togglePeriodDate(date) {
   console.log(`${iso} → Logged as Cycle Day ${cycleDay}`);
 
   loadCalendar();
+  saveUserData();
 }
 
 function getLocalISO(date) {
@@ -570,6 +571,7 @@ document.getElementById("symptomForm").addEventListener("submit", async function
   this.reset();
   loadSymptomCalendar();
   summarizePatterns();
+  saveUserData();
   alert("Symptoms saved.");
 });
 
@@ -663,6 +665,7 @@ document.getElementById("backlogForm").addEventListener("submit", async function
   this.reset();
   loadSymptomCalendar();
   summarizePatterns();
+  saveUserData();
 
   alert(`Symptoms logged for ${date}`);
 });
