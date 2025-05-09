@@ -399,7 +399,7 @@ function loadSymptomCalendar() {
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
       let primary = symptomLog[iso][0] || '';
-      if (primary.includes("fatigue")) primary = "fatigue";
+      //if (primary.includes("fatigue")) primary = "fatigue";
       if (!["cramps", "fatigue", "appetite-increase", "appetite-decrease", "anxiety", "acne"].includes(primary)) {
         primary = "anxiety";
       }
