@@ -359,8 +359,8 @@ form button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -10%); /* adjust vertical position */
-  width: 36px;
-  height: 36px;
+  width: 45px;
+  height: 45px;
   pointer-events: none;
 }
 
@@ -372,6 +372,7 @@ form button {
   left: 50%;
   transform: translateX(-50%);
   z-index: 0;
+  top: 0px;
 }
 
 .symptom-dot {
