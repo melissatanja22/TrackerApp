@@ -732,3 +732,5 @@ function changeCalendarOffset(direction) {
   loadSymptomCalendar();
   loadCalendar();
 }
+
+window.saveUserData = saveUserData;
