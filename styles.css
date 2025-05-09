@@ -300,7 +300,7 @@ form button {
   width: 10px;
   height: 10px;
   border: 3px solid;
-  border-radius: 4px;
+  border-radius: 50%;
   background: none;
   display: inline-block;
 }
