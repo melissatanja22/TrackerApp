@@ -97,27 +97,32 @@ function toggleAuthButtons(loggedIn) {
 
 // --- DATA ---
 async function loadUserData() {
+  if (!currentUser) return;
+
   const ref = doc(db, "users", currentUser.uid);
   const snap = await getDoc(ref);
-
-  localStorage.setItem("loggedPeriods", JSON.stringify(data.loggedPeriods || []));
 
   if (!snap.exists()) {
     await setDoc(ref, {
       periodDates: [],
-      symptomLog: {}
+      symptomLog: {},
+      loggedPeriods: []
     });
-  } else {
-    const data = snap.data();
-    localStorage.setItem("periodDates", JSON.stringify(data.periodDates));
-    localStorage.setItem("symptomLog", JSON.stringify(data.symptomLog));
   }
 
+  const data = (await getDoc(ref)).data(); // Read again in case you just set it
+
+  localStorage.setItem("periodDates", JSON.stringify(data.periodDates || []));
+  localStorage.setItem("symptomLog", JSON.stringify(data.symptomLog || {}));
+  localStorage.setItem("loggedPeriods", JSON.stringify(data.loggedPeriods || []));
+
+  console.log("Loaded data:", data);
   loadCalendar();
   updateCycleInfo();
   loadSymptomCalendar();
   summarizePatterns();
 }
+
 
 async function saveUserData() {
   if (!currentUser) return;
