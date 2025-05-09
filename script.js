@@ -476,13 +476,13 @@ renderSymptomDots(day, iso);
 const symptomColorMap = {
   cramps: "#6C0E32",
   fatigue: "#227C9D",
-  appetiteinc: "#72B569",
-  appetitedec: "#AFD5AA",
+  "appetite-increase": "#72B569",
+  "appetite-decrease": "#AFD5AA",
   anxiety: "#FFBA49",
   acne: "#EF6461",
 };
 
-const symptomOrder = ["cramps", "fatigue", "appetiteinc", "appetitedec", "anxiety", "acne"];
+const symptomOrder = ["cramps", "fatigue", "appetite-increase", "appetite-decrease", "anxiety", "acne"];
 
 function renderSymptomDots(dayEl, iso) {
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
@@ -648,8 +648,8 @@ document.getElementById("backlogForm").addEventListener("submit", async function
 const symptomOptions = [
   { label: "Cramps", class: "cramps", value: "cramps" },
   { label: "Fatigue", class: "fatigue", value: "fatigue" },
-  { label: "Appetite ↑", class: "appetiteinc", value: "appetite-increase" },
-  { label: "Appetite ↓", class: "appetitedec", value: "appetite-decrease" },
+  { label: "Appetite ↑", class: "appetite-increase", value: "appetite-increase" },
+  { label: "Appetite ↓", class: "appetite-decrease", value: "appetite-decrease" },
   { label: "Anxiety", class: "anxiety", value: "anxiety" },
   { label: "Acne", class: "acne", value: "acne" }
 ];
