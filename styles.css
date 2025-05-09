@@ -271,10 +271,12 @@ form button {
 }
 
 .legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1px solid;
+  width: 10px;
+  height: 10px;
+  border: 3px solid;
+  border-radius: 4px;
+  background: none;
+  display: inline-block;
 }
 
 .legend-column {
