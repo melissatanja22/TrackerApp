@@ -734,3 +734,4 @@ function changeCalendarOffset(direction) {
 }
 
 window.saveUserData = saveUserData;
+window.loadUserData = loadUserData;
