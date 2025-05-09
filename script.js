@@ -315,7 +315,7 @@ function togglePeriodDate(date) {
       // Move this date to the start of the array
       sorted.splice(thisIndex, 1);         // remove it
       sorted.unshift(date);                // insert at start
-      console.log(`${iso} → New cycle started (gap from previous: ${gap} days)`);
+      //console.log(`${iso} → New cycle started (gap from previous: ${gap} days)`);
     }
   }
 
@@ -325,7 +325,6 @@ function togglePeriodDate(date) {
 
   // Optional: log cycle day for debug
   const cycleDay = Math.floor((date - sorted[0]) / (1000 * 60 * 60 * 24));
-  console.log(`${iso} → Logged as Cycle Day ${cycleDay}`);
 
   loadCalendar();
   saveUserData();
