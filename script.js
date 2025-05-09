@@ -217,7 +217,7 @@ function getPhaseName(phase) {
 function updateCycleInfo() {
   const lastPeriod = getLastPeriod();
   const avgLength = getAvgCycleLength();
-  const today = new Date(year, month, d, 12, 0, 0); // 12PM avoids day-flipping
+  const today = new Date(); // 12PM avoids day-flipping
 
   const daysSince = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = daysSince % avgLength;
