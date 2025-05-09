@@ -44,13 +44,22 @@ let regularCalendarOffset = 0;
 // --- AUTH ---
 document.getElementById("loginBtn").addEventListener("click", () => {
   signInWithRedirect(auth, provider)
-    .then(result => {
-      currentUser = result.user;
-      loadUserData();
-      toggleAuthButtons(true);
-    });
+
     console.log('logged in');
 });
+
+getRedirectResult(auth)
+  .then(result => {
+    if (result && result.user) {
+      currentUser = result.user;
+      console.log("Logged in via redirect:", currentUser.email);
+      loadUserData();
+      toggleAuthButtons(true);
+    }
+  })
+  .catch(error => {
+    console.error("Redirect login error:", error.message);
+  });
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
   signOut(auth).then(() => {
