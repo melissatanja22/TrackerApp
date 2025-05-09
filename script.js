@@ -399,8 +399,8 @@ function loadSymptomCalendar() {
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
       let primary = symptomLog[iso][0] || '';
-      if (primary.includes("appetite")) primary = "appetite";
-      if (!["cramps", "fatigue", "appetite", "anxiety", "acne"].includes(primary)) {
+      if (primary.includes("cramps")) primary = "cramps";
+      if (!["cramps", "fatigue", "appetiteinc", "appetitedec", "anxiety", "acne"].includes(primary)) {
         primary = "anxiety";
       }
       day.classList.add(`symptom-${primary}`);
@@ -648,8 +648,8 @@ document.getElementById("backlogForm").addEventListener("submit", async function
 const symptomOptions = [
   { label: "Cramps", class: "cramps", value: "cramps" },
   { label: "Fatigue", class: "fatigue", value: "fatigue" },
-  { label: "Appetite ↑", class: "appetite", value: "appetite-increase" },
-  { label: "Appetite ↓", class: "appetite", value: "appetite-decrease" },
+  { label: "Appetite ↑", class: "appetiteinc", value: "appetite-increase" },
+  { label: "Appetite ↓", class: "appetitedec", value: "appetite-decrease" },
   { label: "Anxiety", class: "anxiety", value: "anxiety" },
   { label: "Acne", class: "acne", value: "acne" }
 ];
