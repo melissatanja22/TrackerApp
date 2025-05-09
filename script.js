@@ -657,7 +657,6 @@ document.getElementById("backlogToggles").addEventListener("click", function (e)
   if (e.target.classList.contains("symptom-button")) {
     e.target.classList.toggle("selected");
   }
-
 });
 
 
@@ -668,6 +667,7 @@ document.getElementById("backlogForm").addEventListener("submit", async function
 
   const selected = [...document.querySelectorAll('#realtimeToggles .selected')]
   .map(btn => symptomOptions.find(opt => opt.label === btn.textContent)?.value);
+  console.log("Backlogged symptoms:", selected);
 
   const custom = document.getElementById("customBacklogSymptom").value.trim();
   if (custom) selected.push(custom);
@@ -682,8 +682,6 @@ document.getElementById("backlogForm").addEventListener("submit", async function
   summarizePatterns();
 
   alert(`Symptoms logged for ${date}`);
-
-  console.log("Backlogged symptoms:", selected);
 });
 
 const symptomOptions = [
