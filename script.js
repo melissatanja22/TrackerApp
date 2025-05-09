@@ -667,7 +667,6 @@ document.getElementById("backlogForm").addEventListener("submit", async function
 
   const selected = [...document.querySelectorAll('#realtimeToggles .selected')]
   .map(btn => symptomOptions.find(opt => opt.label === btn.textContent)?.value);
-  console.log("Backlogged symptoms:", selected);
 
   const custom = document.getElementById("customBacklogSymptom").value.trim();
   if (custom) selected.push(custom);
@@ -728,6 +727,7 @@ document.addEventListener("DOMContentLoaded", () => {
     left.addEventListener("click", () => changeCalendarOffset(-1));
     right.addEventListener("click", () => changeCalendarOffset(1));
   }
+  console.log("Backlogged symptoms:", selected);
 });
 
 
