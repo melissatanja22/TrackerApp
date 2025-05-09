@@ -39,6 +39,11 @@ let currentUser = null;
 let calendarOffset = 0;
 let regularCalendarOffset = 0;
 
+firebase.auth().onAuthStateChanged(user => {
+  console.log("User is:", user?.email || "Not logged in");
+});
+
+
 
 // --- AUTH ---
 document.getElementById("loginBtn").addEventListener("click", () => {
