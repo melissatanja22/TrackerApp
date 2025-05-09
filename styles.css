@@ -351,7 +351,6 @@ form button {
 .calendar-day {
   position: relative;
   text-align: center;
-  padding: 4px;
   font-size: 0.8rem;
 }
 
@@ -371,6 +370,7 @@ form button {
   border-radius: 50%;
   position: absolute;
   left: 50%;
+  transform: translateX(-50%);
   z-index: 0;
 }
 
