@@ -420,14 +420,18 @@ day.appendChild(number);
   const isFuture = date >= new Date().setHours(0, 0, 0, 0);
 const isLogged = logged.includes(iso);
 
-  const dot = document.createElement("div");
-  dot.classList.add("dot");
+const ring = document.createElement("div");
+ring.classList.add("symptom-ring");
 
-  if (isLogged) {
-    dot.classList.add("menstrual");
-  } else if (phase === "menstrual" && isFuture) {
-    dot.classList.add("predicted-menstrual");
-  }
+const dot = document.createElement("div");
+dot.classList.add("phase-dot"); // rename to match your style
+// apply your menstrual phase dot styles here as before...
+
+if (isLogged) {
+  dot.classList.add("menstrual");
+} else if (phase === "menstrual" && isFuture) {
+  dot.classList.add("predicted-menstrual");
+}
 
 if (phase) {
   if (isPredictedMenstrual) {
@@ -454,12 +458,17 @@ if (phase) {
   }
 }
 
+// Add 6 outer symptom dots
+for (let i = 0; i < 6; i++) {
+  const symptomDot = document.createElement("div");
+  symptomDot.classList.add("symptom-dot", `symptom-${i}`);
+  ring.appendChild(symptomDot);
+}
 
+ring.appendChild(dot);
+day.appendChild(ring);
+renderSymptomDots(day, iso);
 
-
-    day.appendChild(dot);
-
-    //addPhaseDotToDay(day, date);
 
   }
 
