@@ -506,31 +506,48 @@ function renderSymptomDots(dayEl, iso) {
 
 function summarizePatterns() {
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
-  const avgLength = getAvgCycleLength();
-  const lastPeriod = getLastPeriod();
-  const counts = {};
+  const periods = (JSON.parse(localStorage.getItem("loggedPeriods")) || []).map(d => new Date(d + "T12:00:00")).sort((a, b) => a - b);
+  if (!periods.length) return;
 
-  for (let date in log) {
-    const day = new Date(date);
-    const dayOffset = Math.floor((day - lastPeriod) / (1000 * 60 * 60 * 24));
-    const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-    const phase = getPhase(cycleDay);
-    log[date].forEach(symptom => {
-      const key = `${symptom}_${phase}`;
-      counts[key] = (counts[key] || 0) + 1;
+  const phaseCounts = {};
+  const symptomDayOffsets = {};
+
+  Object.entries(log).forEach(([dateStr, symptoms]) => {
+    const date = new Date(dateStr + "T12:00:00");
+
+    // Find next period after this date
+    const nextPeriod = periods.find(p => p >= date);
+    if (!nextPeriod) return;
+
+    const daysBefore = Math.floor((nextPeriod - date) / (1000 * 60 * 60 * 24));
+    const phase = getCyclePhaseForDate(date);
+
+    symptoms.forEach(symptom => {
+      if (!symptomDayOffsets[symptom]) symptomDayOffsets[symptom] = [];
+      if (!phaseCounts[symptom]) phaseCounts[symptom] = {};
+
+      symptomDayOffsets[symptom].push(daysBefore);
+      phaseCounts[symptom][phase] = (phaseCounts[symptom][phase] || 0) + 1;
     });
-  }
-
-  const summary = Object.entries(counts).map(([key, count]) => {
-    const [symptom, phase] = key.split("_");
-    return `<li>${symptom} shows up often during your <strong>${phase}</strong> phase (${count} times)</li>`;
   });
 
-  document.getElementById("patternSummary").innerHTML = `
-    <h3>Symptom Patterns</h3>
-    <ul>${summary.join("")}</ul>
-  `;
+  const summary = document.getElementById("patternSummary");
+  summary.innerHTML = "";
+
+  Object.keys(symptomDayOffsets).forEach(symptom => {
+    const avgDays = Math.round(
+      symptomDayOffsets[symptom].reduce((a, b) => a + b, 0) / symptomDayOffsets[symptom].length
+    );
+
+    const phases = phaseCounts[symptom];
+    const mostCommonPhase = Object.entries(phases).sort((a, b) => b[1] - a[1])[0][0];
+
+    const line = document.createElement("p");
+    line.textContent = `You experience ${symptom} on average ${avgDays} day${avgDays !== 1 ? "s" : ""} before your period, during your ${mostCommonPhase} phase.`;
+    summary.appendChild(line);
+  });
 }
+
 
 document.getElementById("symptomForm").addEventListener("submit", async function (e) {
   e.preventDefault();
