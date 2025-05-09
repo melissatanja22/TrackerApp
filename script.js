@@ -101,11 +101,20 @@ async function saveUserData() {
   if (!currentUser) return;
   const ref = doc(db, "users", currentUser.uid);
   
-  await updateDoc(ref, {
-    periodDates: JSON.parse(localStorage.getItem("periodDates")),
-    symptomLog: JSON.parse(localStorage.getItem("symptomLog")),
-    loggedPeriods: JSON.parse(localStorage.getItem("loggedPeriods") || "[]")
+  const snap = await getDoc(ref);
+if (!snap.exists()) {
+  await setDoc(ref, {
+    periodDates: [],
+    symptomLog: {},
+    loggedPeriods: []
   });
+}
+await updateDoc(ref, {
+  periodDates: JSON.parse(localStorage.getItem("periodDates") || "[]"),
+  symptomLog: JSON.parse(localStorage.getItem("symptomLog") || "{}"),
+  loggedPeriods: JSON.parse(localStorage.getItem("loggedPeriods") || "[]")
+});
+
 
 }
 
