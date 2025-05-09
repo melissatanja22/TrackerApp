@@ -399,7 +399,7 @@ function loadSymptomCalendar() {
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
       let primary = symptomLog[iso][0] || '';
-      if (primary.includes("cramps")) primary = "cramps";
+      if (primary.includes("appetite")) primary = "appetite";
       if (!["cramps", "fatigue", "appetite-increase", "appetite-decrease", "anxiety", "acne"].includes(primary)) {
         primary = "anxiety";
       }
@@ -618,7 +618,6 @@ window.addEventListener("load", () => {
     updateCycleInfo();
     loadSymptomCalendar();
     summarizePatterns();
-    renderSymptomLegend();
 
   }
 });
