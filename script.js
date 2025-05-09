@@ -647,18 +647,11 @@ function renderSymptomToggles(targetId, symptomList) {
 
     btn.addEventListener("click", () => {
       btn.classList.toggle("selected");
-      console.log("Backlogged symptoms:", "selected");
     });
 
     container.appendChild(btn);
   });
 }
-
-document.getElementById("backlogToggles").addEventListener("click", function (e) {
-  if (e.target.classList.contains("symptom-button")) {
-    e.target.classList.toggle("selected");
-  }
-});
 
 
 document.getElementById("backlogForm").addEventListener("submit", async function (e) {
