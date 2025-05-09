@@ -382,8 +382,8 @@ form button {
 }
 
 .symptom-0 { top: 3px; left: 50%; transform: translateX(-50%); }      /* top */
-.symptom-1 { top: 10px; left: 6px; }                                   /* top-left */
-.symptom-2 { top: 10px; right: 6px; }      /* top-right */
-.symptom-3 { bottom: 10px; left: 6px; }                                /* bottom-left */
+.symptom-1 { top: 11px; left: 5px; }                                   /* top-left */
+.symptom-2 { top: 11px; right: 5px; }      /* top-right */
+.symptom-3 { bottom: 11px; left: 5px; }                                /* bottom-left */
 .symptom-4 { bottom: 3px; left: 50%; transform: translateX(-50%); }   /* bottom */
-.symptom-5 { bottom: 10px; right: 6px; }                               /* bottom-right */
+.symptom-5 { bottom: 11px; right: 5px; }                               /* bottom-right */
