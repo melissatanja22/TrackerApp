@@ -271,8 +271,10 @@ form button {
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid;
 }
 
 .legend-column {
@@ -295,6 +297,8 @@ form button {
 .legend-symptom {
   width: 10px;
   height: 10px;
+  border: 3px solid;
+  border-radius: 4px;
   background: none;
   display: inline-block;
 }
