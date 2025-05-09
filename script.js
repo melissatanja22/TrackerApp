@@ -238,7 +238,7 @@ function updateCycleInfo() {
 function loadCalendar() {
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
-  const base = new Date(year, month, d, 12, 0, 0); // 12PM avoids day-flipping
+  const base = new Date(); // 12PM avoids day-flipping
 
   base.setMonth(base.getMonth() + calendarOffset);
   const year = base.getFullYear();
