@@ -68,6 +68,10 @@ onAuthStateChanged(auth, user => {
   } else {
     toggleAuthButtons(false);
   }
+
+  firebase.auth().onAuthStateChanged(user => {
+    console.log("User is:", user?.email || "Not logged in");
+  });
 });
 
 function toggleAuthButtons(loggedIn) {
