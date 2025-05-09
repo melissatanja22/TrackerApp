@@ -220,7 +220,7 @@ form button {
   }
 }
 
-
+/*
 .day .dot {
   width: 25px;
   height: 25px;
@@ -231,7 +231,7 @@ form button {
   z-index: 0;
 }
 
-/* Symptom border colors 
+ Symptom border colors 
 .day.symptom-cramps    { border: 4px solid #6C0E32; }
 .day.symptom-fatigue   { border: 4px solid #227C9D; }
 .day.symptom-appetite  { border: 4px solid #AFD5AA; }
@@ -349,7 +349,7 @@ form button {
 }
 
 .calendar-day {
-  position: absolute;
+  position: relative;
   text-align: center;
   font-size: 0.8rem;
 }
@@ -386,8 +386,8 @@ form button {
 }
 
 .symptom-0 { top: 2px; left: 50%; transform: translateX(-50%); }      /* top */
-.symptom-1 { top: 4px; left: 8px; }                                   /* top-left */
+.symptom-1 { top: 8px; left: 8px; }                                   /* top-left */
 .symptom-2 { top: 50%; left: 2px; transform: translateY(-50%); }      /* left */
-.symptom-3 { bottom: 4px; left: 8px; }                                /* bottom-left */
+.symptom-3 { bottom: 8px; left: 8px; }                                /* bottom-left */
 .symptom-4 { bottom: 2px; left: 50%; transform: translateX(-50%); }   /* bottom */
-.symptom-5 { bottom: 4px; right: 8px; }                               /* bottom-right */
+.symptom-5 { bottom: 8px; right: 8px; }                               /* bottom-right */
