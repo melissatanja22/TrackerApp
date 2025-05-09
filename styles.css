@@ -379,9 +379,9 @@ form button {
   z-index: 1;
 }
 
-.symptom-0 { top: 25%; left: 50%; transform: translateX(-50%); }      /* top */
-.symptom-1 { top: 50%; left: 8px; }                                   /* top-left */
-.symptom-2 { top: 50%; left: 2px; transform: translateY(-50%); }      /* top-right */
+.symptom-0 { top: 4px; left: 50%; transform: translateX(-50%); }      /* top */
+.symptom-1 { top: 8px; left: 8px; }                                   /* top-left */
+.symptom-2 { top: 8px; left: 2px; }      /* top-right */
 .symptom-3 { bottom: 8px; left: 8px; }                                /* bottom-left */
 .symptom-4 { bottom: 2px; left: 50%; transform: translateX(-50%); }   /* bottom */
 .symptom-5 { bottom: 8px; right: 8px; }                               /* bottom-right */
