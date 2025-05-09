@@ -2,6 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 import {
   getAuth,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged
@@ -40,7 +42,7 @@ let regularCalendarOffset = 0;
 
 // --- AUTH ---
 document.getElementById("loginBtn").addEventListener("click", () => {
-  signInWithPopup(auth, provider)
+  signInWithRedirect(auth, provider)
     .then(result => {
       currentUser = result.user;
       loadUserData();
