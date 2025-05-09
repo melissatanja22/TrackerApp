@@ -48,6 +48,7 @@ document.getElementById("loginBtn").addEventListener("click", () => {
       loadUserData();
       toggleAuthButtons(true);
     });
+    console.log('logged in');
 });
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
