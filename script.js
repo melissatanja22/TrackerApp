@@ -400,7 +400,7 @@ function loadSymptomCalendar() {
     if (symptomLog[iso]) {
       let primary = symptomLog[iso][0] || '';
       if (primary.includes("cramps")) primary = "cramps";
-      if (!["cramps", "fatigue", "appetiteinc", "appetitedec", "anxiety", "acne"].includes(primary)) {
+      if (!["cramps", "fatigue", "appetite-increase", "appetite-decrease", "anxiety", "acne"].includes(primary)) {
         primary = "anxiety";
       }
       day.classList.add(`symptom-${primary}`);
