@@ -43,7 +43,17 @@ let regularCalendarOffset = 0;
 
 // --- AUTH ---
 document.getElementById("loginBtn").addEventListener("click", () => {
-  signInWithRedirect(auth, provider)
+  //signInWithRedirect(auth, provider)
+  signInWithPopup(auth, provider)
+  .then(result => {
+    currentUser = result.user;
+    loadUserData();
+    toggleAuthButtons(true);
+  })
+  .catch(error => {
+    console.error("Popup login failed:", error.message);
+  });
+
 
     console.log('logged in');
 });
