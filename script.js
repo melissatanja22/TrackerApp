@@ -404,8 +404,8 @@ function loadSymptomCalendar() {
       const validSymptoms = [
         "cramps",
         "fatigue",
-        "appetite increase",
-        "appetite decrease",
+        "appetite-increase",
+        "appetite-decrease",
         "anxiety",
         "acne"
       ];
