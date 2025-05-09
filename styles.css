@@ -332,7 +332,8 @@ form button {
 
 .symptom-toggle.symptom-cramps    { background: #6C0E32; color: white; }
 .symptom-toggle.symptom-fatigue   { background: #227C9D; color: white; }
-.symptom-toggle.symptom-appetite  { background: #AFD5AA; color: white; }
+.symptom-toggle.symptom-appetiteinc { background: #72B569; color: white; }
+.symptom-toggle.symptom-appetitedec  { background: #AFD5AA; color: white; }
 .symptom-toggle.symptom-anxiety   { background: #FFBA49; color: white; }
 .symptom-toggle.symptom-acne      { background: #EF6461; color: white; }
 

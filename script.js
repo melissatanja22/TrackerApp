@@ -476,13 +476,13 @@ renderSymptomDots(day, iso);
 const symptomColorMap = {
   cramps: "#6C0E32",
   fatigue: "#227C9D",
-  appetite: "#AFD5AA",
+  appetiteinc: "#72B569",
+  appetitedec: "#AFD5AA",
   anxiety: "#FFBA49",
   acne: "#EF6461",
-  custom: "#AAA"
 };
 
-const symptomOrder = ["cramps", "fatigue", "appetite", "anxiety", "acne", "custom"];
+const symptomOrder = ["cramps", "fatigue", "appetiteinc", "appetitedec", "anxiety", "acne"];
 
 function renderSymptomDots(dayEl, iso) {
   const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
