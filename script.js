@@ -100,21 +100,25 @@ async function loadUserData() {
   if (!currentUser) return;
 
   const ref = doc(db, "users", currentUser.uid);
-  const snap = await getDoc(ref);
+let snap = await getDoc(ref);
 
-  if (!snap.exists()) {
-    await setDoc(ref, {
-      periodDates: [],
-      symptomLog: {},
-      loggedPeriods: []
-    });
-  }
+// If it doesn't exist, create it
+if (!snap.exists()) {
+  await setDoc(ref, {
+    periodDates: [],
+    symptomLog: {},
+    loggedPeriods: []
+  });
+  // Force a fresh read after creation
+  snap = await getDoc(ref);
+}
 
-  const data = (await getDoc(ref)).data(); // Read again in case you just set it
+const data = snap.data();
 
-  localStorage.setItem("periodDates", JSON.stringify(data.periodDates || []));
-  localStorage.setItem("symptomLog", JSON.stringify(data.symptomLog || {}));
-  localStorage.setItem("loggedPeriods", JSON.stringify(data.loggedPeriods || []));
+// ✅ Now update localStorage
+localStorage.setItem("periodDates", JSON.stringify(data.periodDates || []));
+localStorage.setItem("symptomLog", JSON.stringify(data.symptomLog || {}));
+localStorage.setItem("loggedPeriods", JSON.stringify(data.loggedPeriods || []));
 
   console.log("Loaded data:", data);
   loadCalendar();
