@@ -647,7 +647,7 @@ document.getElementById("backlogForm").addEventListener("submit", async function
   const date = document.getElementById("backlogDate").value;
   if (!date) return alert("Please choose a date.");
 
-  const selected = [...document.querySelectorAll('#realtimeToggles .selected')]
+  const selected = [...document.querySelectorAll('#backlogToggles .selected')]
   .map(btn => symptomOptions.find(opt => opt.label === btn.textContent)?.value);
 
   const custom = document.getElementById("customBacklogSymptom").value.trim();
