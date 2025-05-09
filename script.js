@@ -208,7 +208,8 @@ function getPhaseName(phase) {
 function updateCycleInfo() {
   const lastPeriod = getLastPeriod();
   const avgLength = getAvgCycleLength();
-  const today = new Date();
+  const today = new Date(year, month, d, 12, 0, 0); // 12PM avoids day-flipping
+
   const daysSince = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = daysSince % avgLength;
   const phase = getPhase(dayOfCycle);
@@ -228,7 +229,8 @@ function updateCycleInfo() {
 function loadCalendar() {
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
-  const base = new Date();
+  const base = new Date(year, month, d, 12, 0, 0); // 12PM avoids day-flipping
+
   base.setMonth(base.getMonth() + calendarOffset);
   const year = base.getFullYear();
   const month = base.getMonth();
