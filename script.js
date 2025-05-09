@@ -575,7 +575,7 @@ function renderSymptomLegend() {
   container.innerHTML = "";
 
   const symptomColorMap = {
-    "cramps": "#6C0E32",
+  "cramps": "#6C0E32",
   "fatigue": "#227C9D",
   "appetite-increase": "#72B569",
   "appetite-decrease": "#AFD5AA",
