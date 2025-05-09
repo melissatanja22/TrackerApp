@@ -570,6 +570,38 @@ document.getElementById("symptomForm").addEventListener("submit", async function
   alert("Symptoms saved.");
 });
 
+function renderSymptomLegend() {
+  const container = document.getElementById("symptomLegend");
+  container.innerHTML = "";
+
+  const symptomColorMap = {
+    "cramps": "#6C0E32",
+  "fatigue": "#227C9D",
+  "appetite-increase": "#72B569",
+  "appetite-decrease": "#AFD5AA",
+  "anxiety": "#FFBA49",
+  "acne": "#EF6461",
+  };
+
+  Object.entries(symptomColorMap).forEach(([symptom, color]) => {
+    const item = document.createElement("div");
+    item.classList.add("legend-item");
+
+    const dot = document.createElement("div");
+    dot.classList.add("legend-dot");
+    dot.style.backgroundColor = color;
+    dot.style.borderColor = color;
+
+    const label = document.createElement("span");
+    label.textContent = symptom;
+
+    item.appendChild(dot);
+    item.appendChild(label);
+    container.appendChild(item);
+  });
+}
+
+
 // --- VIEW SWITCH ---
 window.showView = (id) => {
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
@@ -616,6 +648,7 @@ window.addEventListener("load", () => {
     updateCycleInfo();
     loadSymptomCalendar();
     summarizePatterns();
+    renderSymptomLegend();
 
   }
 });

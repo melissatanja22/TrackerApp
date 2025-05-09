@@ -257,9 +257,24 @@ form button {
 
 .legend-grid {
   display: flex;
-  gap: 2rem;
-  justify-content: space-around;
   flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
 }
 
 .legend-column {
