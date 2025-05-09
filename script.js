@@ -647,6 +647,7 @@ function renderSymptomToggles(targetId, symptomList) {
 
     btn.addEventListener("click", () => {
       btn.classList.toggle("selected");
+      console.log("Backlogged symptoms:", "selected");
     });
 
     container.appendChild(btn);
@@ -727,7 +728,6 @@ document.addEventListener("DOMContentLoaded", () => {
     left.addEventListener("click", () => changeCalendarOffset(-1));
     right.addEventListener("click", () => changeCalendarOffset(1));
   }
-  console.log("Backlogged symptoms:", selected);
 });
 
 
