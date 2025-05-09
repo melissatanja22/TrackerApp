@@ -115,6 +115,7 @@ await updateDoc(ref, {
   loggedPeriods: JSON.parse(localStorage.getItem("loggedPeriods") || "[]")
 });
 
+console.log('data saved');
 
 }
 
