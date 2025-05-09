@@ -505,7 +505,7 @@ document.getElementById("symptomForm").addEventListener("submit", async function
 
 
   const log = JSON.parse(localStorage.getItem("symptomLog")) || {};
-  log[today] = symptoms;
+  log[today] = selected;
   localStorage.setItem("symptomLog", JSON.stringify(log));
   await saveUserData();
 
