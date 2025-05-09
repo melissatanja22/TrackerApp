@@ -657,7 +657,6 @@ document.getElementById("backlogToggles").addEventListener("click", function (e)
   if (e.target.classList.contains("symptom-button")) {
     e.target.classList.toggle("selected");
   }
-  console.log("Backlogged symptoms:", selected);
 
 });
 
@@ -683,6 +682,8 @@ document.getElementById("backlogForm").addEventListener("submit", async function
   summarizePatterns();
 
   alert(`Symptoms logged for ${date}`);
+
+  console.log("Backlogged symptoms:", selected);
 });
 
 const symptomOptions = [
