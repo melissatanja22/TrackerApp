@@ -572,25 +572,6 @@ document.getElementById("symptomForm").addEventListener("submit", async function
 
 
 
-  Object.entries(symptomColorMap).forEach(([symptom, color]) => {
-    const item = document.createElement("div");
-    item.classList.add("legend-item");
-
-    const dot = document.createElement("div");
-    dot.classList.add("legend-dot");
-    dot.style.backgroundColor = color;
-    dot.style.borderColor = color;
-
-    const label = document.createElement("span");
-    label.textContent = symptom;
-
-    item.appendChild(dot);
-    item.appendChild(label);
-    container.appendChild(item);
-  });
-
-
-
 // --- VIEW SWITCH ---
 window.showView = (id) => {
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
