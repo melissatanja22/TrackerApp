@@ -653,6 +653,12 @@ function renderSymptomToggles(targetId, symptomList) {
   });
 }
 
+document.getElementById("backlogToggles").addEventListener("click", function (e) {
+  if (e.target.classList.contains("symptom-button")) {
+    e.target.classList.toggle("selected");
+  }
+});
+
 
 document.getElementById("backlogForm").addEventListener("submit", async function (e) {
   e.preventDefault();
