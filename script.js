@@ -469,10 +469,39 @@ ring.appendChild(dot);
 day.appendChild(ring);
 renderSymptomDots(day, iso);
 
-
   }
 
 }
+
+const symptomColorMap = {
+  cramps: "#6C0E32",
+  fatigue: "#227C9D",
+  appetite: "#0F7173",
+  anxiety: "#BDC1EF",
+  acne: "#5C415D",
+  custom: "#AAA"
+};
+
+const symptomOrder = ["cramps", "fatigue", "appetite", "anxiety", "acne", "custom"];
+
+function renderSymptomDots(dayEl, iso) {
+  const symptomLog = JSON.parse(localStorage.getItem("symptomLog")) || {};
+  const symptoms = symptomLog[iso] || [];
+
+  symptomOrder.forEach((symptom, index) => {
+    const dot = dayEl.querySelector(`.symptom-dot.symptom-${index}`);
+    if (!dot) return;
+
+    if (symptoms.includes(symptom)) {
+      dot.style.backgroundColor = symptomColorMap[symptom];
+      dot.style.borderColor = symptomColorMap[symptom];
+    } else {
+      dot.style.backgroundColor = "transparent";
+      dot.style.borderColor = "transparent";
+    }
+  });
+}
+
 
 
 function summarizePatterns() {
