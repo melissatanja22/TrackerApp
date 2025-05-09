@@ -348,15 +348,9 @@ form button {
   color: #A53860;
 }
 
-.calendar-day {
-  position: relative;
-  text-align: center;
-  font-size: 0.8rem;
-}
 
 .symptom-ring {
   position: absolute;
-  top: 50%;
   left: 50%;
   transform: translate(-50%, -10%); /* adjust vertical position */
   width: 45px;
