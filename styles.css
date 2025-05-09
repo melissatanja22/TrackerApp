@@ -349,7 +349,7 @@ form button {
 }
 
 .calendar-day {
-  position: relative;
+  position: absolute;
   text-align: center;
   font-size: 0.8rem;
 }
