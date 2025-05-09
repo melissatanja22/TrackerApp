@@ -657,6 +657,8 @@ document.getElementById("backlogToggles").addEventListener("click", function (e)
   if (e.target.classList.contains("symptom-button")) {
     e.target.classList.toggle("selected");
   }
+  console.log("Backlogged symptoms:", selected);
+
 });
 
 
