@@ -239,7 +239,7 @@ function updateCycleInfo() {
 
   const daysSince = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = daysSince % avgLength;
-  const phase = getPhase(dayOfCycle);
+  const phase = getCyclePhaseForDate(today);
 
   const cycleInfo = document.getElementById("cycleInfo");
   const cycleTips = document.getElementById("cycleTips");
@@ -359,7 +359,7 @@ function togglePeriodDate(date) {
   // Optional: log cycle day for debug
   const cycleDay = Math.floor((date - sorted[0]) / (1000 * 60 * 60 * 24));
 
-  console.log("loggedPeriods", JSON.stringify(updated));
+  //console.log("loggedPeriods", JSON.stringify(updated));
 
   loadCalendar();
   saveUserData();
