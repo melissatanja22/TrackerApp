@@ -800,9 +800,24 @@ document.addEventListener("DOMContentLoaded", () => {
     leftArrow.addEventListener("click", () => changeCalendarOffset(-1));
     rightArrow.addEventListener("click", () => changeCalendarOffset(1));
   }
-});
 
-document.addEventListener("DOMContentLoaded", () => {
+  const symptomForm = document.getElementById("symptomForm");
+  const backlogForm = document.getElementById("backlogForm");
+
+  if (symptomForm) {
+    symptomForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      // handle symptom logging
+    });
+  }
+
+  if (backlogForm) {
+    backlogForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      // handle backlog logging
+    });
+  }
+
   const left = document.querySelector('.arrow-btn.left-regular');
   const right = document.querySelector('.arrow-btn.right-regular');
 
@@ -811,7 +826,6 @@ document.addEventListener("DOMContentLoaded", () => {
     right.addEventListener("click", () => changeCalendarOffset(1));
   }
 });
-
 
 
 function changeCalendarOffset(direction) {
@@ -826,3 +840,4 @@ window.loadUserData = loadUserData;
 window.db = getFirestore(app);
 window.setDoc = setDoc;
 window.doc = doc;
+
