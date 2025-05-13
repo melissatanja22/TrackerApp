@@ -187,6 +187,7 @@ function getCyclePhaseForDate(date) {
   if (!anchor || date < anchor) return null;
 
   const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
+  console.log(dayOffset);
 
   // 💥 Phase logic starts here
 
@@ -482,7 +483,7 @@ dot.classList.add("phase-dot"); // rename to match your style
 
 if (isLogged) {
   dot.classList.add("menstrual");
-} else if (phase && isFuture) {
+} else if (phase === "menstrual" && isFuture) {
   dot.classList.add("predicted-menstrual");
 }
 
