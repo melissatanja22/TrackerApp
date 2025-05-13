@@ -359,6 +359,8 @@ function togglePeriodDate(date) {
   // Optional: log cycle day for debug
   const cycleDay = Math.floor((date - sorted[0]) / (1000 * 60 * 60 * 24));
 
+  console.log("loggedPeriods", JSON.stringify(updated));
+
   loadCalendar();
   saveUserData();
   updateCycleInfo();
