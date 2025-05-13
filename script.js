@@ -446,7 +446,7 @@ function loadSymptomCalendar() {
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
     const phase = getCyclePhaseForDate(date);
-    console.log(getCyclePhaseForDate(date +1));
+    console.log(getCyclePhaseForDate(iso+1));
 
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
