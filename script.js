@@ -555,44 +555,55 @@ function summarizePatterns() {
   const periods = (JSON.parse(localStorage.getItem("loggedPeriods")) || []).map(d => new Date(d + "T12:00:00")).sort((a, b) => a - b);
   if (!periods.length) return;
 
-  const phaseCounts = {};
-  const symptomDayOffsets = {};
+  const patternSummary = {};
+  const daysBeforeMap = {};
 
   Object.entries(log).forEach(([dateStr, symptoms]) => {
     const date = new Date(dateStr + "T12:00:00");
-
-    // Find next period after this date
     const nextPeriod = periods.find(p => p >= date);
     if (!nextPeriod) return;
 
     const daysBefore = Math.floor((nextPeriod - date) / (1000 * 60 * 60 * 24));
     const phase = getCyclePhaseForDate(date);
+    if (!phase) return;
 
     symptoms.forEach(symptom => {
-      if (!symptomDayOffsets[symptom]) symptomDayOffsets[symptom] = [];
-      if (!phaseCounts[symptom]) phaseCounts[symptom] = {};
-
-      symptomDayOffsets[symptom].push(daysBefore);
-      phaseCounts[symptom][phase] = (phaseCounts[symptom][phase] || 0) + 1;
+      if (!patternSummary[phase]) patternSummary[phase] = {};
+      if (!patternSummary[phase][symptom]) patternSummary[phase][symptom] = [];
+      patternSummary[phase][symptom].push(daysBefore);
     });
   });
 
   const summary = document.getElementById("patternSummary");
   summary.innerHTML = "";
 
-  Object.keys(symptomDayOffsets).forEach(symptom => {
-    const avgDays = Math.round(
-      symptomDayOffsets[symptom].reduce((a, b) => a + b, 0) / symptomDayOffsets[symptom].length
-    );
+  Object.entries(patternSummary).forEach(([phase, symptomMap]) => {
+    const section = document.createElement("div");
+    section.innerHTML = `<h3 style="margin-top: 1em;">Phase: <strong style="color: #A53860;">${phase}</strong></h3>`;
 
-    const phases = phaseCounts[symptom];
-    const mostCommonPhase = Object.entries(phases).sort((a, b) => b[1] - a[1])[0][0];
+    const sortedSymptoms = Object.entries(symptomMap).sort((a, b) => {
+      const aAvg = avg(a[1]);
+      const bAvg = avg(b[1]);
+      return aAvg - bAvg;
+    });
 
-    const line = document.createElement("p");
-    line.textContent = `You experience ${symptom} on average ${avgDays} day${avgDays !== 1 ? "s" : ""} before your period, during your ${mostCommonPhase} phase.`;
-    summary.appendChild(line);
+    sortedSymptoms.forEach(([symptom, daysList]) => {
+      const avgDays = Math.round(avg(daysList));
+      const p = document.createElement("p");
+
+      p.innerHTML = `You experience <strong style="color:#0F7173;">${symptom}</strong> on average <strong style="color:#DA627D;">${avgDays} day${avgDays !== 1 ? "s" : ""}</strong> before your period during your <strong style="color:#A53860;">${phase}</strong> phase.`;
+
+      section.appendChild(p);
+    });
+
+    summary.appendChild(section);
   });
+
+  function avg(arr) {
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+  }
 }
+
 
 
 document.getElementById("symptomForm").addEventListener("submit", async function (e) {
