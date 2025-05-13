@@ -86,6 +86,11 @@ nav button {
   position: relative;
   z-index: 2;  /* Always on top */
   color: #fff;
+  text-shadow:
+    -1px -1px 0 #6C0E32,
+     1px -1px 0 #6C0E32,
+    -1px  1px 0 #6C0E32,
+     1px  1px 0 #6C0E32;
 }
 
 .menstrual { background: #6C0E32; color: #fff;}
