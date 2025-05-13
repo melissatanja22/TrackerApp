@@ -446,6 +446,7 @@ function loadSymptomCalendar() {
     const dayOffset = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
     const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
     const phase = getCyclePhaseForDate(date);
+    console.log(getCyclePhaseForDate(date +1));
 
     // SYMPTOM STYLE
     if (symptomLog[iso]) {
@@ -481,7 +482,7 @@ dot.classList.add("phase-dot"); // rename to match your style
 
 if (isLogged) {
   dot.classList.add("menstrual");
-} else if (!phase && isFuture) {
+} else if (phase && isFuture) {
   dot.classList.add("predicted-menstrual");
 }
 
