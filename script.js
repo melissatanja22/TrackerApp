@@ -562,7 +562,6 @@ function summarizePatterns() {
   if (!periods.length) return;
 
   const patternSummary = {};
-  const daysBeforeMap = {};
 
   Object.entries(log).forEach(([dateStr, symptoms]) => {
     const date = new Date(dateStr + "T12:00:00");
@@ -587,6 +586,12 @@ function summarizePatterns() {
     const section = document.createElement("div");
     section.innerHTML = `<h3 style="margin-top: 1em;">Phase: <strong style="color: #A53860;">${phase}</strong></h3>`;
 
+    const symptomGrid = document.createElement("div");
+    symptomGrid.style.display = "grid";
+    symptomGrid.style.gridTemplateColumns = "repeat(auto-fill, minmax(140px, 1fr))";
+    symptomGrid.style.gap = "10px";
+    symptomGrid.style.marginTop = "0.5em";
+
     const sortedSymptoms = Object.entries(symptomMap).sort((a, b) => {
       const aAvg = avg(a[1]);
       const bAvg = avg(b[1]);
@@ -595,20 +600,52 @@ function summarizePatterns() {
 
     sortedSymptoms.forEach(([symptom, daysList]) => {
       const avgDays = Math.round(avg(daysList));
-      const p = document.createElement("p");
+      const when = avgDays === 0
+        ? "on the first day"
+        : `${avgDays} day${avgDays !== 1 ? "s" : ""} before`;
 
-      p.innerHTML = `You experience <strong style="color:#0F7173;">${symptom}</strong> on average <strong style="color:#DA627D;">${avgDays} day${avgDays !== 1 ? "s" : ""}</strong> before your period during your <strong style="color:#A53860;">${phase}</strong> phase.`;
+      const card = document.createElement("div");
+      card.className = "symptom-card";
+      card.style.padding = "8px 10px";
+      card.style.borderRadius = "10px";
+      card.style.fontSize = "0.85em";
+      card.style.background = getSymptomColor(symptom) || "#ccc";
+      card.style.color = "#fff";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
+      card.style.alignItems = "center";
+      card.style.textAlign = "center";
 
-      section.appendChild(p);
+      card.innerHTML = `
+        <strong style="text-transform: capitalize;">${symptom}</strong>
+        <span style="font-weight: 300;">${when}</span>
+      `;
+
+      symptomGrid.appendChild(card);
     });
 
+    section.appendChild(symptomGrid);
     summary.appendChild(section);
   });
 
   function avg(arr) {
     return arr.reduce((a, b) => a + b, 0) / arr.length;
   }
+
+  function getSymptomColor(symptom) {
+    const map = {
+      "cramps": "#6C0E32",
+      "fatigue": "#227C9D",
+      "appetite-increase": "#72B569",
+      "appetite-decrease": "#AFD5AA",
+      "anxiety": "#FFBA49",
+      "acne": "#EF6461"
+    };
+    return map[symptom] || "#888";
+  }
+  
 }
+
 
 
 
