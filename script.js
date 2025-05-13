@@ -187,7 +187,7 @@ function getCyclePhaseForDate(date) {
   if (!anchor || date < anchor) return null;
 
   const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
-  console.log(dayOffset);
+  console.log("date:" + date + " anchor:" + anchor);
 
   // 💥 Phase logic starts here
 
