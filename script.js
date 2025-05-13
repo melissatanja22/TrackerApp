@@ -153,16 +153,15 @@ console.log('data saved');
 // --- CORE LOGIC ---
 
 
-function getLastPeriod(beforeDate = new Date()) {
-  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-
-  const filtered = logged
-    .map(d => new Date(d + "T12:00:00"))
-    .filter(d => d <= beforeDate)
+function getLastPeriod(referenceDate = new Date()) {
+  const logged = JSON.parse(localStorage.getItem("loggedPeriods") || []);
+  const sorted = logged.map(d => new Date(d + "T12:00:00"))
+    .filter(d => d <= referenceDate)
     .sort((a, b) => b - a);
 
-  return filtered[0] || null;
+  return sorted[0] || null;
 }
+
 
 
 function getCyclePhaseForDate(date) {
@@ -247,26 +246,11 @@ function updateCycleInfo() {
 
   // Reset and apply phase class for matching background
   //cycleInfo.className = phase;
-  //cycleTips.className = phase;
+  cycleTips.className = phase;
 
-  let message = "";
-
-  if (phase === "menstrual") {
-    message = "🩸 You’re currently in your <strong>menstrual phase</strong>. Take it easy, rest, and hydrate.";
-  } else if (phase === "follicular") {
-    message = "🌱 You’re in your <strong>follicular phase</strong>. Energy may be rising—great time to plan and create.";
-  } else if (phase === "ovulation") {
-    message = "🔥 You’re in your <strong>ovulation phase</strong>. Peak energy, clarity, and connection.";
-  } else if (phase === "luteal") {
-    message = "🌙 You’re in your <strong>luteal phase</strong>. Slow down, reflect, and prep for rest.";
-  } else {
-    message = "Cycle info not available yet—log your period to get started.";
-  }
-
-  cycleTips.innerHTML = message;
 
   //cycleInfo.innerHTML = `<p>Day ${dayOfCycle} of your cycle</p>`;
-  //cycleTips.innerHTML = `<p><strong> ${getPhaseName(phase)}</strong></p>`;
+  cycleTips.innerHTML = `<p><strong> ${getPhaseName(phase)}</strong></p>`;
 }
 
 
