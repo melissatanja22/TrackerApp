@@ -55,14 +55,14 @@ document.getElementById("loginBtn").addEventListener("click", () => {
   });
 
 
-    console.log('logged in');
+    //console.log('logged in');
 });
 
 getRedirectResult(auth)
   .then(result => {
     if (result && result.user) {
       currentUser = result.user;
-      console.log("Logged in via redirect:", currentUser.email);
+      //console.log("Logged in via redirect:", currentUser.email);
       loadUserData();
       toggleAuthButtons(true);
     }
@@ -120,7 +120,7 @@ localStorage.setItem("periodDates", JSON.stringify(data.periodDates || []));
 localStorage.setItem("symptomLog", JSON.stringify(data.symptomLog || {}));
 localStorage.setItem("loggedPeriods", JSON.stringify(data.loggedPeriods || []));
 
-  console.log("Loaded data:", data);
+  //console.log("Loaded data:", data);
   loadCalendar();
   updateCycleInfo();
   loadSymptomCalendar();
@@ -146,7 +146,7 @@ await updateDoc(ref, {
   loggedPeriods: JSON.parse(localStorage.getItem("loggedPeriods") || "[]")
 });
 
-console.log('data saved');
+//console.log('data saved');
 
 }
 
@@ -166,41 +166,40 @@ function getLastPeriod(referenceDate = new Date()) {
 
 function getCyclePhaseForDate(date) {
   const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-
   const iso = date.getFullYear() + '-' +
               String(date.getMonth() + 1).padStart(2, '0') + '-' +
               String(date.getDate()).padStart(2, '0');
 
   const isLogged = logged.includes(iso);
-  const isTodayOrFuture = date >= new Date().setHours(0, 0, 0, 0);
-  const totalMenstrualDays = 5;
+  const isTodayOrFuture = date >= (() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  })();
+  
   const avgLength = getAvgCycleLength();
+  const totalMenstrualDays = 5;
 
   const loggedDates = logged.map(d => new Date(d + "T12:00:00")).sort((a, b) => b - a);
   if (!loggedDates.length) return null;
 
   const anchor = getCycleAnchor(date);
   if (!anchor || date < anchor) return null;
-  const lastPeriod = getLastPeriod();
-
-
-  const daysSince = Math.floor((date - lastPeriod) / (1000 * 60 * 60 * 24));
-  if (daysSince < 0) return null;
 
   const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
 
-  // For cycle phases
-  if (dayOffset < 5) {
-    const isLogged = logged.includes(iso);
+  // 💥 Phase logic starts here
+
+  if (dayOffset < totalMenstrualDays) {
     if (isLogged) return "menstrual";
     if (isTodayOrFuture) return "predicted-menstrual";
+    return null; // avoid showing predictions in the past
   }
-  
-  const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
-  //console.log(`${date.toDateString()} → Cycle Day ${cycleDay}`);
-  return getPhase(cycleDay);
 
+  const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
+  return getPhase(cycleDay);
 }
+
 
 function getAvgCycleLength() {
   const dates = JSON.parse(localStorage.getItem("periodDates")) || [];
