@@ -481,7 +481,7 @@ dot.classList.add("phase-dot"); // rename to match your style
 
 if (isLogged) {
   dot.classList.add("menstrual");
-} else if (phase !== "luteal" !== "ovulation" !== "follicular" !== "menstrual" && isFuture) {
+} else if (phase !== "luteal" !== "ovulation" !== "follicular" !== "menstrual") {
   dot.classList.add("predicted-menstrual");
 }
 
@@ -496,7 +496,7 @@ if (phase) {
       #FFF2F3 4px,
       #FFF2F3 8px
       )`;
-      number.style.color = "color: #fff;"
+    number.style.color = "color: #fff;"
     number.style.textShadow = `
       -1px -1px 0 #6C0E32,
        1px -1px 0 #6C0E32,
