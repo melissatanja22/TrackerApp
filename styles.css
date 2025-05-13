@@ -80,6 +80,11 @@ nav button {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  text-shadow:
+    -1px -1px 0 #6C0E32,
+     1px -1px 0 #6C0E32,
+    -1px  1px 0 #6C0E32,
+     1px  1px 0 #6C0E32;
 }
 
 .day-number {
