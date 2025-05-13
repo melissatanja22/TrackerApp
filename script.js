@@ -196,9 +196,6 @@ function getCyclePhaseForDate(date) {
     return null; // avoid showing predictions in the past
   }
 
-  const today = new Date();
-today.setHours(12, 0, 0, 0);
-
 
   const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
   return getPhase(cycleDay);
