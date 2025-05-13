@@ -199,15 +199,6 @@ function getCyclePhaseForDate(date) {
   const today = new Date();
 today.setHours(12, 0, 0, 0);
 
-const phase = getCyclePhaseForDate(today);
-
-console.log("🧪 updateCycleInfo debug:");
-console.log("→ Today:", today.toISOString().split("T")[0]);
-console.log("→ Phase:", phase);
-
-const logs = JSON.parse(localStorage.getItem("loggedPeriods"));
-console.log("→ Logged periods:", logs);
-
 
   const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
   return getPhase(cycleDay);
@@ -247,7 +238,8 @@ function getPhaseName(phase) {
 function updateCycleInfo() {
   const lastPeriod = getLastPeriod();
   const avgLength = getAvgCycleLength();
-  const today = new Date(); // 12PM avoids day-flipping
+  const today = new Date();
+today.setHours(12, 0, 0, 0);
 
   const daysSince = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
   const dayOfCycle = daysSince % avgLength;
