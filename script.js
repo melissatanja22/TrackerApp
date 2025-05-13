@@ -481,9 +481,11 @@ dot.classList.add("phase-dot"); // rename to match your style
 
 if (isLogged) {
   dot.classList.add("menstrual");
-} else if (phase === "menstrual" && isFuture) {
+} else if (phase != "luteal" != "ovulation" != "follicular" != "menstrual" && isFuture) {
   dot.classList.add("predicted-menstrual");
 }
+
+//else if (phase === "menstrual" && isFuture) {
 
 if (phase) {
   if (!isPredictedMenstrual) {
