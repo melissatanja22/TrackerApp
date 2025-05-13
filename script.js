@@ -487,7 +487,7 @@ if (isLogged) {
 
 if (phase) {
   if (isPredictedMenstrual) {
-    dot.style.background = `repeating-linear-gradient(
+    dot.style.backgroundColor = `repeating-linear-gradient(
     -45deg,
     #6C0E32,
     #6C0E32 4px,
@@ -680,19 +680,6 @@ window.showView = (id) => {
 };
 
 // --- NOTIFICATIONS ---
-
-window.enableNotifications = function () {
-  if (!("Notification" in window)) {
-    alert("Browser doesn't support notifications.");
-    return;
-  }
-
-  Notification.requestPermission().then(permission => {
-    if (permission === "granted") {
-      schedulePeriodReminder();
-    }
-  });
-};
 
 window.addEventListener("load", () => {
   if (!document.getElementById("calendar").children.length) {
