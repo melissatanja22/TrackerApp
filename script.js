@@ -487,19 +487,7 @@ if (isLogged) {
 
 if (phase) {
   if (isPredictedMenstrual) {
-    dot.style.backgroundColor = `repeating-linear-gradient(
-    -45deg,
-    #6C0E32,
-    #6C0E32 4px,
-    #FFF2F3 4px,
-    #FFF2F3 8px
-    )`;
-    number.style.color = "color: #fff;"
-  number.style.textShadow = `
-    -1px -1px 0 #6C0E32,
-     1px -1px 0 #6C0E32,
-    -1px  1px 0 #6C0E32,
-     1px  1px 0 #6C0E32`;
+    dot.style.backgroundColor = "#A53860"
   } else {
     dot.style.backgroundColor = {
       menstrual: "#6C0E32",
