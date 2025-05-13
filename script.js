@@ -488,15 +488,7 @@ if (isLogged) {
 //else if (phase === "menstrual" && isFuture) {
 
 if (phase) {
-  if (!isPredictedMenstrual) {
-    dot.style.backgroundColor = {
-      menstrual: "#6C0E32",
-      follicular: "#A53860",
-      ovulation: "#DA627D",
-      luteal: "#FFA5AB"
-    }[phase];
-    
-  } else {
+  if (isPredictedMenstrual) {
     dot.style.backgroundColor = `repeating-linear-gradient(
       -45deg,
       #6C0E32,
@@ -510,6 +502,15 @@ if (phase) {
        1px -1px 0 #6C0E32,
       -1px  1px 0 #6C0E32,
        1px  1px 0 #6C0E32`;
+    
+  } else {
+
+    dot.style.backgroundColor = {
+      menstrual: "#6C0E32",
+      follicular: "#A53860",
+      ovulation: "#DA627D",
+      luteal: "#FFA5AB"
+    }[phase];
     
   }
 }
