@@ -241,6 +241,8 @@ function updateCycleInfo() {
   const dayOfCycle = daysSince % avgLength;
   const phase = getCyclePhaseForDate(today);
 
+  console.log(phase);
+
   const cycleInfo = document.getElementById("cycleInfo");
   const cycleTips = document.getElementById("cycleTips");
 
