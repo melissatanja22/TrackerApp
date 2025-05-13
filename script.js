@@ -196,6 +196,19 @@ function getCyclePhaseForDate(date) {
     return null; // avoid showing predictions in the past
   }
 
+  const today = new Date();
+today.setHours(12, 0, 0, 0);
+
+const phase = getCyclePhaseForDate(today);
+
+console.log("🧪 updateCycleInfo debug:");
+console.log("→ Today:", today.toISOString().split("T")[0]);
+console.log("→ Phase:", phase);
+
+const logs = JSON.parse(localStorage.getItem("loggedPeriods"));
+console.log("→ Logged periods:", logs);
+
+
   const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
   return getPhase(cycleDay);
 }
