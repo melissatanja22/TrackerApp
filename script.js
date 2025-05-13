@@ -693,26 +693,7 @@ window.enableNotifications = function () {
     }
   });
 };
-document.getElementById("notifyBtn").addEventListener("click", enableNotifications);
 
-function schedulePeriodReminder() {
-  const lastPeriod = getLastPeriod();
-  const avgLength = getAvgCycleLength();
-  const nextPeriod = new Date(lastPeriod);
-  nextPeriod.setDate(lastPeriod.getDate() + avgLength);
-
-  const reminderDate = new Date(nextPeriod);
-  reminderDate.setDate(reminderDate.getDate() - 3);
-
-  const now = new Date();
-  const delay = reminderDate.getTime() - now.getTime();
-
-  if (delay <= 0) return;
-
-  setTimeout(() => {
-    new Notification("Heads up, love—your period is likely 3 days away.");
-  }, delay);
-}
 window.addEventListener("load", () => {
   if (!document.getElementById("calendar").children.length) {
     loadCalendar();
