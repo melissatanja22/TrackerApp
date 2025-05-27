@@ -189,6 +189,20 @@ function getCyclePhaseForDate(date) {
   const anchor = getCycleAnchor(date);
   if (!anchor || date < anchor) return null;
 
+  const map = JSON.parse(localStorage.getItem("loggedPeriodsMap") || {});
+const yesterdayISO = getLocalISO(new Date(date.getTime() - 86400000));
+
+// 🔥 Special case: if yesterday was marked "last", skip menstrual logic
+if (map[yesterdayISO] === "last" && !map[iso]) {
+  const avgLength = getAvgCycleLength();
+  const anchor = new Date(date); // today becomes the anchor
+  const dayOffset = 5; // we skip menstrual (0-4), start at day 5
+
+  const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
+  return getPhase(cycleDay);
+}
+
+
   const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
   //console.log("date:" + date + " anchor:" + anchor);
 
