@@ -200,6 +200,20 @@ function getCyclePhaseForDate(date) {
     return null; // avoid showing predictions in the past
   }
 
+  const map = JSON.parse(localStorage.getItem("loggedPeriodsMap") || {});
+const yesterdayISO = getLocalISO(new Date(date.getTime() - 86400000)); // minus 1 day
+
+// ✅ Reset cycle if the previous day was marked "last"
+if (map[yesterdayISO] === "last") {
+  // Start of new cycle
+  const dayOfCycle = 0;
+
+  if (map[iso] === "period") return "menstrual";
+  if (dayOfCycle < 5) return "predicted-menstrual";
+  return getPhase(dayOfCycle);
+}
+
+
 
   const cycleDay = ((dayOffset % avgLength) + avgLength) % avgLength;
   return getPhase(cycleDay);
