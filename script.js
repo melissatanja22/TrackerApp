@@ -154,13 +154,16 @@ await updateDoc(ref, {
 
 
 function getLastPeriod(referenceDate = new Date()) {
-  const logged = JSON.parse(localStorage.getItem("loggedPeriods") || []);
-  const sorted = logged.map(d => new Date(d + "T12:00:00"))
+  const map = JSON.parse(localStorage.getItem("loggedPeriodsMap") || "{}");
+  const dates = Object.entries(map)
+    .filter(([_, type]) => type === "period" || type === "last")
+    .map(([d]) => new Date(d + "T12:00:00"))
     .filter(d => d <= referenceDate)
     .sort((a, b) => b - a);
 
-  return sorted[0] || null;
+  return dates[0] || null;
 }
+
 
 
 
@@ -321,54 +324,60 @@ function loadCalendar() {
 }
 
 function togglePeriodDate(date) {
-  // Ensure date is a Date object
   if (typeof date === "string") {
     date = new Date(date + "T12:00:00");
   }
 
   const iso = getLocalISO(date);
-  let logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
+  let log = JSON.parse(localStorage.getItem("loggedPeriodsMap") || "{}");
+  let status = log[iso]; // undefined, "period", or "last"
 
-  if (logged.includes(iso)) {
-    // Remove it
-    logged = logged.filter(d => d !== iso);
-  } else {
-    // Add it
-    logged.push(iso);
+  // 🔄 Cycle through states
+  if (!status) {
+    log[iso] = "period";
+  } else if (status === "period") {
+    log[iso] = "last";
+  } else if (status === "last") {
+    delete log[iso];
   }
 
-  // Convert to Date objects
-  let sorted = logged
-    .map(d => new Date(d + "T12:00:00"))
-    .sort((a, b) => a - b);
+  // 🔁 Sort dates for cycle detection logic
+  const entries = Object.entries(log)
+    .map(([d, type]) => ({ date: new Date(d + "T12:00:00"), iso: d, type }))
+    .sort((a, b) => a.date - b.date);
 
-  // 🔥 If the logged day is more than 4 days after the previous one, treat it as new cycle
-  const thisIndex = sorted.findIndex(d => getLocalISO(d) === iso);
-  const prev = sorted[thisIndex - 1];
+  // 🔥 Auto-move new first date to front if >4 day gap
+  const thisIndex = entries.findIndex(e => e.iso === iso);
+  const prev = entries[thisIndex - 1];
 
-  if (prev) {
-    const gap = Math.floor((date - prev) / (1000 * 60 * 60 * 24));
+  if (prev && (log[iso] === "period" || log[iso] === "last")) {
+    const gap = Math.floor((date - prev.date) / (1000 * 60 * 60 * 24));
     if (gap > 4) {
-      // Move this date to the start of the array
-      sorted.splice(thisIndex, 1);         // remove it
-      sorted.unshift(date);                // insert at start
-      //console.log(`${iso} → New cycle started (gap from previous: ${gap} days)`);
+      const entry = entries.splice(thisIndex, 1)[0];
+      entries.unshift(entry); // new cycle start
     }
   }
 
-  // Save updated list
-  const updated = sorted.map(getLocalISO);
-  localStorage.setItem("loggedPeriods", JSON.stringify(updated));
+  // Rebuild log from sorted entries
+  const newMap = {};
+  entries.forEach(e => {
+    newMap[e.iso] = e.type;
+  });
 
-  // Optional: log cycle day for debug
-  const cycleDay = Math.floor((date - sorted[0]) / (1000 * 60 * 60 * 24));
+  localStorage.setItem("loggedPeriodsMap", JSON.stringify(newMap));
 
-  //console.log("loggedPeriods", JSON.stringify(updated));
+  // Optional debug
+  const cycleStart = entries[0]?.date;
+  if (cycleStart) {
+    const dayNum = Math.floor((date - cycleStart) / (1000 * 60 * 60 * 24));
+    console.log(`Cycle day ${dayNum} (${log[iso]})`);
+  }
 
   loadCalendar();
   saveUserData();
   updateCycleInfo();
 }
+
 
 function getLocalISO(date) {
   return date.getFullYear() + '-' +
