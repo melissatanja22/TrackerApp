@@ -395,27 +395,37 @@ function getLocalISO(date) {
 }
 
 
-function getCycleAnchor(date) {
-  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const sorted = logged
-    .map(d => new Date(d + "T12:00:00"))
-    .sort((a, b) => a - b);
+function getCycleAnchor(referenceDate = new Date()) {
+  const log = JSON.parse(localStorage.getItem("loggedPeriodsMap") || "{}");
 
-  let anchor = null;
-  for (let i = 0; i < sorted.length; i++) {
-    const current = sorted[i];
-    const next = sorted[i + 1];
+  // Sort all logged dates
+  const entries = Object.entries(log)
+    .map(([d, type]) => ({ date: new Date(d + "T12:00:00"), iso: d, type }))
+    .sort((a, b) => a.date - b.date);
 
-    if (date < current) break;
+  // Find the most recent "last" date before the reference date
+  let lastEnd = null;
+  for (const entry of entries) {
+    if (entry.date > referenceDate) break;
+    if (entry.type === "last") lastEnd = entry.date;
+  }
 
-    // If there's a next date and it's > 4 days away, this is the start of a cycle
-    if (!next || Math.floor((next - current) / (1000 * 60 * 60 * 24)) > 4) {
-      anchor = current;
+  // Find the first "period" after the last "last"
+  for (const entry of entries) {
+    if (entry.type === "period" && (!lastEnd || entry.date > lastEnd)) {
+      if (entry.date <= referenceDate) return entry.date;
     }
   }
 
-  return anchor;
+  // Fallback: last known period if no "last" marker yet
+  const fallback = entries
+    .filter(e => (e.type === "period" || e.type === "last") && e.date <= referenceDate)
+    .map(e => e.date)
+    .sort((a, b) => b - a)[0];
+
+  return fallback || null;
 }
+
 
 
 
