@@ -190,7 +190,7 @@ function getCyclePhaseForDate(date) {
   if (!anchor || date < anchor) return null;
 
   const dayOffset = Math.floor((date - anchor) / (1000 * 60 * 60 * 24));
-  console.log("date:" + date + " anchor:" + anchor);
+  //console.log("date:" + date + " anchor:" + anchor);
 
   // 💥 Phase logic starts here
 
@@ -340,6 +340,15 @@ function togglePeriodDate(date) {
   } else if (status === "last") {
     delete log[iso];
   }
+
+  if (log[iso] === "period") {
+    console.log(`${iso} → Logged as period day`);
+  } else if (log[iso] === "last") {
+    console.log(`${iso} → Logged as LAST day of period`);
+  } else {
+    console.log(`${iso} → Unlogged (removed from period)`);
+  }
+  
 
   // 🔁 Sort dates for cycle detection logic
   const entries = Object.entries(log)
