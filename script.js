@@ -396,26 +396,39 @@ function getLocalISO(date) {
 
 
 function getCycleAnchor(date) {
-  const logged = JSON.parse(localStorage.getItem("loggedPeriods")) || [];
-  const sorted = logged
-    .map(d => new Date(d + "T12:00:00"))
-    .sort((a, b) => a - b);
+  const log = JSON.parse(localStorage.getItem("loggedPeriodsMap") || "{}");
+
+  // Get and sort all logged entries
+  const entries = Object.entries(log)
+    .map(([d, type]) => ({ date: new Date(d + "T12:00:00"), iso: d, type }))
+    .sort((a, b) => a.date - b.date);
 
   let anchor = null;
-  for (let i = 0; i < sorted.length; i++) {
-    const current = sorted[i];
-    const next = sorted[i + 1];
 
-    if (date < current) break;
+  for (let i = 0; i < entries.length; i++) {
+    const current = entries[i];
+    const next = entries[i + 1];
 
-    // If there's a next date and it's > 4 days away, this is the start of a cycle
-    if (!next || Math.floor((next - current) / (1000 * 60 * 60 * 24)) > 4) {
-      anchor = current;
+    if (date < current.date) break;
+
+    // 🔥 If current is marked as "last", don't allow any further phases
+    if (current.type === "last" && date > current.date) {
+      anchor = null;
+      continue;
+    }
+
+    // If this is the first period day or there's a 4+ day gap after it
+    if (current.type === "period" || current.type === "last") {
+      const gap = next ? Math.floor((next.date - current.date) / (1000 * 60 * 60 * 24)) : null;
+      if (!next || gap > 4) {
+        anchor = current.date;
+      }
     }
   }
 
   return anchor;
 }
+
 
 
 
